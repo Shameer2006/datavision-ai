@@ -3,18 +3,18 @@
 import { useEffect, useState, useRef } from "react";
 
 const integrations = [
-  { name: "GitHub", category: "Version Control" },
-  { name: "Slack", category: "Communication" },
-  { name: "Stripe", category: "Payments" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "Redis", category: "Cache" },
-  { name: "AWS", category: "Cloud" },
-  { name: "MongoDB", category: "Database" },
-  { name: "Vercel", category: "Hosting" },
-  { name: "Figma", category: "Design" },
-  { name: "Linear", category: "Project Management" },
-  { name: "Notion", category: "Documentation" },
-  { name: "OpenAI", category: "AI/ML" },
+  { name: "PostgreSQL", category: "Data Source" },
+  { name: "MySQL", category: "Data Source" },
+  { name: "MongoDB", category: "Data Source" },
+  { name: "Snowflake", category: "Data Warehouse" },
+  { name: "BigQuery", category: "Data Warehouse" },
+  { name: "Redshift", category: "Data Warehouse" },
+  { name: "CSV/Excel", category: "File Upload" },
+  { name: "Google Sheets", category: "Spreadsheets" },
+  { name: "Airtable", category: "Data Platform" },
+  { name: "Salesforce", category: "CRM Data" },
+  { name: "Stripe", category: "Business Data" },
+  { name: "Tableau", category: "Export & Share" },
 ];
 
 export function IntegrationsSection() {
@@ -44,16 +44,16 @@ export function IntegrationsSection() {
         >
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-8 h-px bg-foreground/30" />
-            Integrations
+            Data Sources
             <span className="w-8 h-px bg-foreground/30" />
           </span>
           <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-6">
-            Works with everything
+            Visualize data
             <br />
-            you already use.
+            from anywhere.
           </h2>
           <p className="text-xl text-muted-foreground">
-            200+ pre-built integrations. Connect your entire stack in minutes.
+            Connect to your databases, data warehouses, spreadsheets, and cloud platforms instantly.
           </p>
         </div>
 
