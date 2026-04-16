@@ -4,32 +4,32 @@ import { useEffect, useState } from "react";
 
 const testimonials = [
   {
-    quote: "Optimus transformed our deployment pipeline. What used to take hours now happens in seconds.",
+    quote: "DataVision AI transformed how we understand our data. What used to take days of analysis now happens in seconds.",
     author: "Sarah Chen",
-    role: "CTO",
+    role: "Data Analyst",
     company: "Meridian Labs",
-    metric: "10x faster deployments",
+    metric: "10x faster insights",
   },
   {
-    quote: "The developer experience is unmatched. Our team's productivity has never been higher.",
+    quote: "The natural language queries are game-changing. Our team can ask questions without knowing SQL.",
     author: "Marcus Webb",
-    role: "Engineering Lead",
+    role: "Analytics Lead",
     company: "Flux Systems",
-    metric: "40% more features shipped",
+    metric: "40% time saved on queries",
   },
   {
-    quote: "Finally, infrastructure that scales with our ambition. Zero downtime since we switched.",
+    quote: "Finally, data visualization that actually understands context. Our decision-making is faster than ever.",
     author: "Elena Rodriguez",
-    role: "VP Engineering",
+    role: "VP Analytics",
     company: "Beacon AI",
-    metric: "99.99% uptime",
+    metric: "5x more insights generated",
   },
   {
-    quote: "The integrations are seamless. We connected our entire stack in a single afternoon.",
+    quote: "The AI suggestions are spot-on. We discover patterns we would have missed with traditional tools.",
     author: "James Liu",
     role: "Founder",
     company: "Prism Analytics",
-    metric: "50+ integrations used",
+    metric: "3x more actionable insights",
   },
 ];
 

@@ -21,8 +21,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Optimus - Platform to Create',
-  description: 'The creative platform for teams who ship. Build, deploy, and scale with unprecedented velocity.',
+  title: 'DataVision AI - Transform Data Into Insights',
+  description: 'AI-powered data visualization platform. Chat with your data, get instant visualizations, and discover insights in seconds.',
   generator: 'v0.app',
 }
 
