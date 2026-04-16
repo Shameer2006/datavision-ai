@@ -6,51 +6,48 @@ import { Copy, Check } from "lucide-react";
 const codeExamples = [
   {
     label: "Install",
-    code: `npm install @optimus/sdk
+    code: `npm install @chartai/sdk
 
 # or
-yarn add @optimus/sdk
-pnpm add @optimus/sdk`,
+yarn add @chartai/sdk
+pnpm add @chartai/sdk`,
   },
   {
     label: "Initialize",
-    code: `import { Optimus } from '@optimus/sdk'
+    code: `import { ChartAI } from '@chartai/sdk'
 
-const optimus = new Optimus({
-  apiKey: process.env.OPTIMUS_KEY
+const chart = new ChartAI({
+  apiKey: process.env.CHART_AI_KEY
 })`,
   },
   {
-    label: "Deploy",
-    code: `const app = await optimus.deploy({
-  name: 'my-app',
-  region: 'auto',
-  scaling: {
-    min: 1,
-    max: 100
-  }
+    label: "Query",
+    code: `const visual = await chart.ask({
+  data: 'my-csv-file',
+  query: 'Show sales trend',
+  type: 'interactive'
 })
 
-console.log('Live at:', app.url)`,
+chart.display(visual)`,
   },
 ];
 
 const features = [
   { 
-    title: "TypeScript native", 
-    description: "Full type safety with auto-generated types."
+    title: "Natural language", 
+    description: "Ask questions in plain English."
   },
   { 
-    title: "Zero config", 
-    description: "Sensible defaults that just work."
+    title: "Secure sandbox", 
+    description: "All code runs in isolated environment."
   },
   { 
-    title: "Edge-ready", 
-    description: "Runs anywhere: Node, Deno, Bun, browsers."
+    title: "Customizable", 
+    description: "Match charts to your brand aesthetics."
   },
   { 
-    title: "12KB gzipped", 
-    description: "Lightweight with zero dependencies."
+    title: "Developer API", 
+    description: "Integrate into your own applications."
   },
 ];
 
@@ -119,16 +116,16 @@ export function DevelopersSection() {
           >
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
               <span className="w-8 h-px bg-foreground/30" />
-              For developers
+              Developer API
             </span>
             <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-8">
-              Built by devs.
+              Built for builders.
               <br />
-              <span className="text-muted-foreground">For devs.</span>
+              <span className="text-muted-foreground">Built for scale.</span>
             </h2>
             <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-              A thoughtfully designed SDK that gets out of your way. 
-              Ship faster with intuitive APIs and exceptional documentation.
+              Integrate our &quot;Chat-to-Chart&quot; engine into your own apps. 
+              Developer-first API with sanitized execution and customizable aesthetics.
             </p>
             
             {/* Features */}

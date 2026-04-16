@@ -5,38 +5,40 @@ import { useEffect, useRef, useState } from "react";
 const steps = [
   {
     number: "I",
-    title: "Connect your tools",
-    description: "Integrate with your existing stack in minutes. We support 200+ data sources out of the box.",
-    code: `import { optimus } from '@optimus/core'
+    title: "Connect Your Source",
+    description: "Upload a CSV, Excel, or connect your database. Our engine automatically profiles your columns and detects data types.",
+    code: `// Upload or connect
+const data = await chart.connect({
+  source: 'database',
+  format: 'auto-detect',
+  profile: true
+})
 
-optimus.connect({
-  source: 'your-database',
-  sync: true
-})`,
+console.log(data.schema)`,
   },
   {
     number: "II",
-    title: "Build your workflow",
-    description: "Design powerful automations with our visual builder or write code directly.",
-    code: `optimus.workflow('process', {
-  trigger: 'event',
-  actions: [
-    'validate',
-    'transform', 
-    'deliver'
-  ]
-})`,
+    title: "Ask Anything",
+    description: "Type your request in plain English. No rigid syntax required—our LLM understands context and nuance.",
+    code: `const chart = await chart.ask({
+  query: "What's the trend?",
+  natural: true,
+  context: data
+})
+
+// AI generates the visualization`,
   },
   {
     number: "III",
-    title: "Ship to production",
-    description: "Deploy globally with zero configuration. Your app goes live in under 30 seconds.",
-    code: `optimus.deploy({
-  target: 'production',
-  regions: 'auto'
+    title: "Get the Visual",
+    description: "Our system generates and executes the Python code in a secure sandbox, delivering a fully interactive chart.",
+    code: `const visual = await chart.render({
+  library: 'plotly',
+  theme: 'interactive',
+  sandbox: 'secure'
 })
 
-// Deployed to 12 regions`,
+chart.display(visual)`,
   },
 ];
 
@@ -88,16 +90,16 @@ export function HowItWorksSection() {
         <div className="mb-16 lg:mb-24">
           <span className="inline-flex items-center gap-3 text-sm font-mono text-background/50 mb-6">
             <span className="w-8 h-px bg-background/30" />
-            Process
+            How it works
           </span>
           <h2
             className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            Three steps.
+            Three simple steps.
             <br />
-            <span className="text-background/50">Infinite possibilities.</span>
+            <span className="text-background/50">Instant insights.</span>
           </h2>
         </div>
 
