@@ -2,13 +2,13 @@
 
 import { useEffect, useState, useRef } from "react";
 
-const features = [
-  { name: "Query Engine", capability: "LLM-powered", speed: "<100ms" },
-  { name: "Schema Detection", capability: "Automatic mapping", speed: "Instant" },
-  { name: "Chart Generation", capability: "AI-optimized", speed: "<500ms" },
-  { name: "Data Sandbox", capability: "Secure isolation", speed: "Live" },
-  { name: "Export API", capability: "Multi-format", speed: "Real-time" },
-  { name: "Caching Layer", capability: "Smart cache", speed: "Microseconds" },
+const locations = [
+  { city: "San Francisco", region: "US West", latency: "12ms" },
+  { city: "New York", region: "US East", latency: "18ms" },
+  { city: "London", region: "Europe", latency: "24ms" },
+  { city: "Tokyo", region: "Asia Pacific", latency: "32ms" },
+  { city: "Sydney", region: "Oceania", latency: "45ms" },
+  { city: "Sao Paulo", region: "South America", latency: "38ms" },
 ];
 
 export function InfrastructureSection() {
@@ -47,31 +47,31 @@ export function InfrastructureSection() {
           >
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
               <span className="w-8 h-px bg-foreground/30" />
-              Architecture
+              Infrastructure
             </span>
             <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-8">
-              Built for speed
+              Global by
               <br />
-              and intelligence.
+              default.
             </h2>
             <p className="text-xl text-muted-foreground leading-relaxed mb-12">
-              Lightning-fast AI inference, intelligent schema detection, and secure data processing. 
-              Our proprietary query engine understands context to generate the perfect visualization instantly.
+              Deploy once, run everywhere. Our edge network spans 17 data centers 
+              across 6 continents, delivering sub-50ms latency to 99% of the world.
             </p>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8">
               <div>
-                <div className="text-4xl lg:text-5xl font-display mb-2">100ms</div>
-                <div className="text-sm text-muted-foreground">Avg response</div>
+                <div className="text-4xl lg:text-5xl font-display mb-2">17</div>
+                <div className="text-sm text-muted-foreground">Data centers</div>
               </div>
               <div>
-                <div className="text-4xl lg:text-5xl font-display mb-2">256-bit</div>
-                <div className="text-sm text-muted-foreground">Encryption</div>
+                <div className="text-4xl lg:text-5xl font-display mb-2">99.99%</div>
+                <div className="text-sm text-muted-foreground">Uptime SLA</div>
               </div>
               <div>
-                <div className="text-4xl lg:text-5xl font-display mb-2">50+</div>
-                <div className="text-sm text-muted-foreground">Data sources</div>
+                <div className="text-4xl lg:text-5xl font-display mb-2">&lt;50ms</div>
+                <div className="text-sm text-muted-foreground">Global latency</div>
               </div>
             </div>
           </div>
@@ -85,18 +85,18 @@ export function InfrastructureSection() {
             <div className="border border-foreground/10">
               {/* Header */}
               <div className="px-6 py-4 border-b border-foreground/10 flex items-center justify-between">
-                <span className="text-sm font-mono text-muted-foreground">Core Systems</span>
+                <span className="text-sm font-mono text-muted-foreground">Edge Network</span>
                 <span className="flex items-center gap-2 text-xs font-mono text-green-600">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  Optimized
+                  All operational
                 </span>
               </div>
 
-              {/* Features */}
+              {/* Locations */}
               <div>
-                {features.map((feature, index) => (
+                {locations.map((location, index) => (
                   <div
-                    key={feature.name}
+                    key={location.city}
                     className={`px-6 py-5 border-b border-foreground/5 last:border-b-0 flex items-center justify-between transition-all duration-300 ${
                       activeLocation === index ? "bg-foreground/[0.02]" : ""
                     }`}
@@ -108,11 +108,11 @@ export function InfrastructureSection() {
                         }`}
                       />
                       <div>
-                        <div className="font-medium">{feature.name}</div>
-                        <div className="text-sm text-muted-foreground">{feature.capability}</div>
+                        <div className="font-medium">{location.city}</div>
+                        <div className="text-sm text-muted-foreground">{location.region}</div>
                       </div>
                     </div>
-                    <span className="font-mono text-sm text-muted-foreground">{feature.speed}</span>
+                    <span className="font-mono text-sm text-muted-foreground">{location.latency}</span>
                   </div>
                 ))}
               </div>
