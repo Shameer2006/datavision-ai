@@ -55,10 +55,10 @@ export function HeroSection() {
         ))}
       </div>
       
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 py-32 lg:py-40">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12 py-24 lg:py-32">
         {/* Eyebrow */}
         <div 
-          className={`mb-8 transition-all duration-700 ${
+          className={`mb-6 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
@@ -69,13 +69,13 @@ export function HeroSection() {
         </div>
         
         {/* Main headline */}
-        <div className="mb-12">
+        <div className="mb-8 lg:mb-12 max-w-4xl">
           <h1 
-            className={`text-[clamp(3rem,12vw,10rem)] font-display leading-[0.9] tracking-tight transition-all duration-1000 ${
+            className={`text-5xl lg:text-7xl font-display leading-tight tracking-tight transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <span className="block">Stop building dashboards.</span>
+            <span className="block text-lg lg:text-2xl mb-2">Stop building dashboards.</span>
             <span className="block">
               Start{" "}
               <span className="relative inline-block">
@@ -101,10 +101,10 @@ export function HeroSection() {
           </h1>
         </div>
         
-        {/* Description */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-end">
+        {/* Description and CTAs */}
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
           <p 
-            className={`text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-xl transition-all duration-700 delay-200 ${
+            className={`text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl flex-shrink-0 transition-all duration-700 delay-200 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
@@ -113,13 +113,13 @@ export function HeroSection() {
           
           {/* CTAs */}
           <div 
-            className={`flex flex-col sm:flex-row items-start gap-4 transition-all duration-700 delay-300 ${
+            className={`flex flex-col sm:flex-row gap-3 transition-all duration-700 delay-300 flex-shrink-0 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
             <Button 
               size="lg" 
-              className="bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group"
+              className="bg-foreground hover:bg-foreground/90 text-background px-8 h-12 text-sm rounded-full group whitespace-nowrap"
             >
               Start free trial
               <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -127,7 +127,7 @@ export function HeroSection() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="h-14 px-8 text-base rounded-full border-foreground/20 hover:bg-foreground/5"
+              className="h-12 px-8 text-sm rounded-full border-foreground/20 hover:bg-foreground/5 whitespace-nowrap"
             >
               Watch demo
             </Button>
@@ -138,24 +138,24 @@ export function HeroSection() {
       
       {/* Stats marquee - full width outside container */}
       <div 
-        className={`absolute bottom-24 left-0 right-0 transition-all duration-700 delay-500 ${
+        className={`relative mt-16 lg:mt-20 transition-all duration-700 delay-500 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        <div className="flex gap-16 marquee whitespace-nowrap">
+        <div className="flex gap-12 lg:gap-16 marquee whitespace-nowrap px-6 lg:px-12 overflow-x-auto pb-4">
           {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex gap-16">
+            <div key={i} className="flex gap-12 lg:gap-16">
               {[
                 { value: "1ms", label: "query response", company: "ENTERPRISE" },
                 { value: "99.9%", label: "uptime guarantee", company: "ANALYTICS" },
                 { value: "256-bit", label: "encryption", company: "SECURITY" },
-                { value: "100+ data", label: "source types", company: "INTEGRATION" },
+                { value: "100+", label: "data sources", company: "INTEGRATION" },
               ].map((stat) => (
-                <div key={`${stat.company}-${i}`} className="flex items-baseline gap-4">
-                  <span className="text-4xl lg:text-5xl font-display">{stat.value}</span>
-                  <span className="text-sm text-muted-foreground">
+                <div key={`${stat.company}-${i}`} className="flex items-baseline gap-3 flex-shrink-0">
+                  <span className="text-2xl lg:text-3xl font-display">{stat.value}</span>
+                  <span className="text-xs lg:text-sm text-muted-foreground">
                     {stat.label}
-                    <span className="block font-mono text-xs mt-1">{stat.company}</span>
+                    <span className="block font-mono text-xs mt-0.5">{stat.company}</span>
                   </span>
                 </div>
               ))}
