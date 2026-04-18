@@ -98,8 +98,8 @@ function AIVisual() {
             <line
               x1="100"
               y1="80"
-              x2={100 + Math.cos(angle) * radius}
-              y2={80 + Math.sin(angle) * radius}
+              x2={(100 + Math.cos(angle) * radius).toFixed(10)}
+              y2={(80 + Math.sin(angle) * radius).toFixed(10)}
               stroke="currentColor"
               strokeWidth="1"
               opacity="0.3"
@@ -115,8 +115,8 @@ function AIVisual() {
             
             {/* Outer node */}
             <circle
-              cx={100 + Math.cos(angle) * radius}
-              cy={80 + Math.sin(angle) * radius}
+              cx={(100 + Math.cos(angle) * radius).toFixed(10)}
+              cy={(80 + Math.sin(angle) * radius).toFixed(10)}
               r="6"
               fill="none"
               stroke="currentColor"
