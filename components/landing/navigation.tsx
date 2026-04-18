@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { name: "Features", href: "#features" },
-  { name: "How it works", href: "#how-it-works" },
-  { name: "Developers", href: "#developers" },
-  { name: "Pricing", href: "#pricing" },
+  { name: "Features", href: "/#features" },
+  { name: "How it works", href: "/#how-it-works" },
+  { name: "Developers", href: "/#developers" },
+  { name: "Pricing", href: "/#pricing" },
 ];
 
 export function Navigation() {
@@ -44,7 +44,7 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <a href="/" className="flex items-center gap-2 group">
             <span className={`font-display tracking-tight transition-all duration-500 ${isScrolled ? "text-xl" : "text-2xl"}`}>DataVision AI</span>
           </a>
 
@@ -64,7 +64,7 @@ export function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="#" className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}>
+            <a href="/login" className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}>
               Sign in
             </a>
             <Button

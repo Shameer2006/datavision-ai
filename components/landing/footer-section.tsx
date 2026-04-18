@@ -17,15 +17,15 @@ const footerLinks = {
     { name: "Status", href: "#" },
   ],
   Company: [
-    { name: "About", href: "#" },
+    { name: "About", href: "/about" },
     { name: "Blog", href: "#" },
     { name: "Careers", href: "#", badge: "Hiring" },
-    { name: "Contact", href: "#" },
+    { name: "Contact", href: "/contact" },
   ],
   Legal: [
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
-    { name: "Security", href: "#security" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
+    { name: "Security", href: "/security" },
   ],
 };
 
