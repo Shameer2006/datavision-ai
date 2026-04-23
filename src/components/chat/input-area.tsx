@@ -29,9 +29,8 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
       onSend(input, attachments);
       setInput("");
       setAttachments([]);
-      // Reset height
       if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto';
+        textareaRef.current.style.height = "auto";
       }
     }
   };

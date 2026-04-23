@@ -16,6 +16,8 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
     const prompt = (formData.get("prompt") as string) || "Analyze this data";
+    // Client-side API key as fallback (when env var is not set)
+    const clientApiKey = request.headers.get("x-gemini-key") || undefined;
 
     if (!file) {
       return NextResponse.json(
@@ -69,7 +71,7 @@ export async function POST(request: NextRequest) {
     // 3. Call Gemini
     let geminiResponse: any;
     try {
-      geminiResponse = await analyzeWithGemini(profile, prompt);
+      geminiResponse = await analyzeWithGemini(profile, prompt, clientApiKey);
     } catch (err: any) {
       console.error("Gemini API error:", err);
       
@@ -78,13 +80,13 @@ export async function POST(request: NextRequest) {
       let userMessage = "Failed to analyze data with AI. Please try again.";
       
       if (errMsg.includes("429") || errMsg.includes("quota") || errMsg.includes("Too Many Requests")) {
-        userMessage = "⏳ API rate limit reached. Your free tier quota is exhausted. Please wait a few minutes and try again, or enable billing on your Google AI project for higher limits.";
+        userMessage = "API rate limit reached. Your free tier quota is exhausted. Please wait a few minutes and try again, or enable billing on your Google AI project for higher limits.";
       } else if (errMsg.includes("503") || errMsg.includes("Service Unavailable")) {
-        userMessage = "⏳ Gemini AI is currently experiencing high demand. Please try again in a moment.";
-      } else if (errMsg.includes("401") || errMsg.includes("403") || errMsg.includes("API key")) {
-        userMessage = "🔑 Invalid API key. Please check your GEMINI_API_KEY in .env.local";
-      } else if (errMsg.includes("not configured")) {
-        userMessage = "🔑 " + errMsg;
+        userMessage = "Gemini AI is currently experiencing high demand. Please try again in a moment.";
+      } else if (errMsg.includes("401") || errMsg.includes("403") || errMsg.includes("API_KEY_INVALID")) {
+        userMessage = "Invalid API key. Please update your Gemini API key in the settings.";
+      } else if (errMsg.includes("not configured") || errMsg.includes("No Gemini API key")) {
+        userMessage = errMsg;
       }
       
       return NextResponse.json(

@@ -83,15 +83,17 @@ const MODELS = ["gemini-2.0-flash"];
 /**
  * Call Gemini with the data profile and user prompt.
  * Uses gemini-2.0-flash — fast, reliable, no thinking overhead.
+ * Accepts an optional clientApiKey as fallback when GEMINI_API_KEY env var is not set.
  */
 export async function analyzeWithGemini(
   profile: DataProfile,
-  userPrompt: string
+  userPrompt: string,
+  clientApiKey?: string
 ): Promise<any> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || apiKey === "your-gemini-api-key-here") {
+  const apiKey = (process.env.GEMINI_API_KEY?.trim()) || clientApiKey?.trim();
+  if (!apiKey) {
     throw new Error(
-      "GEMINI_API_KEY is not configured. Please set it in .env.local"
+      "No Gemini API key configured. Please add your key using the key icon in the sidebar."
     );
   }
 
@@ -108,17 +110,7 @@ ${profileText}
 
 Please analyze the data profile and respond with the appropriate JSON structure.`;
 
-  // ===== DEBUG: Log what is being sent to Gemini =====
-  console.log("\n" + "=".repeat(60));
-  console.log("📊 DATA PROFILE SENT TO GEMINI:");
-  console.log("=".repeat(60));
-  console.log(profileText);
-  console.log("=".repeat(60));
-  console.log("💬 USER PROMPT:", userPrompt);
-  console.log("=".repeat(60));
-  console.log("📏 TOTAL PROMPT LENGTH:", prompt.length, "characters");
-  console.log("=".repeat(60) + "\n");
-  // ===== END DEBUG =====
+  console.log(`[Gemini] Sending profile for "${profile.filename}" (${profile.rows} rows, ${profile.columns} cols), prompt length: ${prompt.length} chars`);
 
   let lastError: Error | null = null;
 
