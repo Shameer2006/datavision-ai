@@ -10,85 +10,95 @@ export function AnimatedSphere() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const chars = "░▒▓█▀▄▌▐│─┤├┴┬╭╮╰╯";
     let time = 0;
+    let lastTime = 0;
+    const TARGET_FPS = 30;
+    const FRAME_INTERVAL = 1000 / TARGET_FPS;
+
+    let width = 0, height = 0;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
     };
 
     resize();
-    window.addEventListener("resize", resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
 
-    const render = () => {
-      const rect = canvas.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
+    // Pre-generate sphere points at fixed angles (only recalc rotation each frame)
+    const PHI_STEP = 0.22;
+    const THETA_STEP = 0.22;
+    const basePoints: { bx: number; by: number; bz: number }[] = [];
+    for (let phi = 0; phi < Math.PI * 2; phi += PHI_STEP) {
+      for (let theta = 0; theta < Math.PI; theta += THETA_STEP) {
+        basePoints.push({
+          bx: Math.sin(theta) * Math.cos(phi),
+          by: Math.sin(theta) * Math.sin(phi),
+          bz: Math.cos(theta),
+        });
+      }
+    }
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const radius = Math.min(rect.width, rect.height) * 0.525;
+    const points: { x: number; y: number; z: number; char: string }[] = basePoints.map(() => ({ x: 0, y: 0, z: 0, char: '' }));
+
+    const render = (timestamp: number) => {
+      frameRef.current = requestAnimationFrame(render);
+      if (timestamp - lastTime < FRAME_INTERVAL) return;
+      lastTime = timestamp;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const radius = Math.min(width, height) * 0.525;
 
       ctx.font = "12px monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const step = 12;
-      const points: { x: number; y: number; z: number; char: string }[] = [];
+      const rotY = time * 0.3;
+      const rotX = time * 0.2;
+      const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+      const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
 
-      // Generate sphere points
-      for (let phi = 0; phi < Math.PI * 2; phi += 0.15) {
-        for (let theta = 0; theta < Math.PI; theta += 0.15) {
-          const x = Math.sin(theta) * Math.cos(phi + time * 0.5);
-          const y = Math.sin(theta) * Math.sin(phi + time * 0.5);
-          const z = Math.cos(theta);
-
-          // Rotate around Y axis
-          const rotY = time * 0.3;
-          const newX = x * Math.cos(rotY) - z * Math.sin(rotY);
-          const newZ = x * Math.sin(rotY) + z * Math.cos(rotY);
-
-          // Rotate around X axis
-          const rotX = time * 0.2;
-          const newY = y * Math.cos(rotX) - newZ * Math.sin(rotX);
-          const finalZ = y * Math.sin(rotX) + newZ * Math.cos(rotX);
-
-          const depth = (finalZ + 1) / 2;
-          const charIndex = Math.floor(depth * (chars.length - 1));
-
-          points.push({
-            x: centerX + newX * radius,
-            y: centerY + newY * radius,
-            z: finalZ,
-            char: chars[charIndex],
-          });
-        }
+      for (let i = 0; i < basePoints.length; i++) {
+        const { bx, by, bz } = basePoints[i];
+        const nx = bx * cosY - bz * sinY;
+        const nz = bx * sinY + bz * cosY;
+        const ny = by * cosX - nz * sinX;
+        const fz = by * sinX + nz * cosX;
+        const depth = (fz + 1) / 2;
+        points[i].x = centerX + nx * radius;
+        points[i].y = centerY + ny * radius;
+        points[i].z = fz;
+        points[i].char = chars[Math.floor(depth * (chars.length - 1))];
       }
 
-      // Sort by z for depth
       points.sort((a, b) => a.z - b.z);
 
-      // Draw points
-      points.forEach((point) => {
-        const alpha = 0.2 + (point.z + 1) * 0.4;
-        ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
-        ctx.fillText(point.char, point.x, point.y);
-      });
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        ctx.fillStyle = `rgba(0,0,0,${(0.2 + (p.z + 1) * 0.4).toFixed(2)})`;
+        ctx.fillText(p.char, p.x, p.y);
+      }
 
       time += 0.02;
-      frameRef.current = requestAnimationFrame(render);
     };
 
-    render();
+    frameRef.current = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      resizeObserver.disconnect();
       cancelAnimationFrame(frameRef.current);
     };
   }, []);
@@ -97,7 +107,7 @@ export function AnimatedSphere() {
     <canvas
       ref={canvasRef}
       className="w-full h-full"
-      style={{ display: "block" }}
+      style={{ display: "block", willChange: "contents" }}
     />
   );
 }

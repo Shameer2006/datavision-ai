@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import { generateMetadata as genMeta } from "@/lib/seo/metadata";
+import {
+  generateSoftwareApplicationSchema,
+  generateFAQSchema,
+  generateAggregateReviewSchema,
+  generateWebPageSchema,
+  StructuredData
+} from "@/lib/seo/structured-data";
 import { Navigation } from "@/components/landing/navigation";
 import { HeroSection } from "@/components/landing/hero-section";
 import { FeaturesSection } from "@/components/landing/features-section";
@@ -15,35 +22,56 @@ import { CtaSection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "DataVision AI - Transform Data Into Insights",
-  description: "AI-powered data visualization platform. Chat with your data, get instant visualizations, and discover insights in seconds.",
+  title: "DataVision AI - AI Data Visualization Platform",
+  description: "Transform raw data into stunning visualizations instantly. Chat with your data using AI, get automated insights, and build dashboards without code. Try free.",
   path: "/",
   keywords: [
-    "AI data visualization",
-    "conversational analytics",
-    "data chat interface",
-    "automated insights",
-    "business intelligence platform",
-    "real-time data visualization"
+    "AI data visualization tool",
+    "conversational analytics platform",
+    "no-code data dashboards",
+    "automated business insights",
+    "natural language data queries",
+    "real-time data visualization",
+    "AI-powered business intelligence",
+    "data analytics software",
+    "interactive charts and graphs",
+    "SQL-free data analysis",
+    "chat with your data AI",
+    "best data visualization tool 2025",
+    "AI dashboard builder",
+    "data analysis tool for non-technical users",
+    "turn data into insights automatically"
   ]
 });
 
 export default function Home() {
+  const webPageSchema = generateWebPageSchema({
+    title: "DataVision AI - AI Data Visualization Platform",
+    description: "Transform raw data into stunning visualizations instantly. Chat with your data using AI, get automated insights, and build dashboards without code.",
+    path: "/"
+  });
+
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <Navigation />
-      <HeroSection />
-      <FeaturesSection />
-      <HowItWorksSection />
-      <InfrastructureSection />
-      <MetricsSection />
-      <IntegrationsSection />
-      <SecuritySection />
-      <DevelopersSection />
-      <TestimonialsSection />
-      <PricingSection />
-      <CtaSection />
-      <FooterSection />
-    </main>
+    <>
+      <StructuredData data={generateSoftwareApplicationSchema()} />
+      <StructuredData data={generateFAQSchema()} />
+      <StructuredData data={generateAggregateReviewSchema()} />
+      <StructuredData data={webPageSchema} />
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <Navigation />
+        <HeroSection />
+        <section id="features" aria-label="Features"><FeaturesSection /></section>
+        <section id="how-it-works" aria-label="How It Works"><HowItWorksSection /></section>
+        <section id="infrastructure" aria-label="Infrastructure"><InfrastructureSection /></section>
+        <section id="metrics" aria-label="Metrics"><MetricsSection /></section>
+        <section id="integrations" aria-label="Integrations"><IntegrationsSection /></section>
+        <section id="security" aria-label="Security"><SecuritySection /></section>
+        <section id="developers" aria-label="Developers"><DevelopersSection /></section>
+        <section id="testimonials" aria-label="Testimonials"><TestimonialsSection /></section>
+        <section id="pricing" aria-label="Pricing"><PricingSection /></section>
+        <CtaSection />
+        <FooterSection />
+      </main>
+    </>
   );
 }

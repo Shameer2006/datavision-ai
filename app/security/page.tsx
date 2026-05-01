@@ -6,10 +6,10 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { Shield, Lock, EyeOff, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = genMeta({
-  title: "Security & Compliance",
-  description: "Learn how DataVision AI ensures your data stays safe with enterprise-grade security and encryption.",
+  title: "Security & Compliance - SOC2, GDPR & HIPAA | DataVision AI",
+  description: "DataVision AI uses AES-256 encryption, TLS 1.3, zero-knowledge row access, and SOC2/GDPR/HIPAA-aligned practices to keep your data safe.",
   path: "/security",
-  keywords: ["enterprise data security", "AI encryption", "secure data visualization", "SOC2 compliance", "data protection"]
+  keywords: ["enterprise data security", "AES-256 encryption", "SOC2 compliance", "GDPR data analytics", "HIPAA compliant analytics", "secure AI data platform", "zero-knowledge analytics"]
 });
 
 export default function SecurityPage() {

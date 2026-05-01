@@ -10,157 +10,104 @@ export function AnimatedTetrahedron() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const chars = "░▒▓█▀▄▌▐│─┤├┴┬╭╮╰╯";
     let time = 0;
+    let lastTime = 0;
+    const FRAME_INTERVAL = 1000 / 30;
+    let width = 0, height = 0;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
     };
 
     resize();
-    window.addEventListener("resize", resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
 
-    // Tetrahedron vertices
     const vertices = [
-      { x: 0, y: 1, z: 0 },           // Top
-      { x: -0.943, y: -0.333, z: -0.5 }, // Bottom left back
-      { x: 0.943, y: -0.333, z: -0.5 },  // Bottom right back
-      { x: 0, y: -0.333, z: 1 },         // Bottom front
+      { x: 0, y: 1, z: 0 },
+      { x: -0.943, y: -0.333, z: -0.5 },
+      { x: 0.943, y: -0.333, z: -0.5 },
+      { x: 0, y: -0.333, z: 1 },
     ];
+    const edges = [[0,1],[0,2],[0,3],[1,2],[2,3],[3,1]];
+    const faces = [[0,1,2],[0,2,3],[0,3,1],[1,3,2]];
 
-    // Edges connecting vertices
-    const edges = [
-      [0, 1], [0, 2], [0, 3], // Top to bottom vertices
-      [1, 2], [2, 3], [3, 1], // Bottom triangle
-    ];
-
-    // Faces for filling with points
-    const faces = [
-      [0, 1, 2], // Back face
-      [0, 2, 3], // Right face
-      [0, 3, 1], // Left face
-      [1, 3, 2], // Bottom face
-    ];
-
-    const rotateY = (point: { x: number; y: number; z: number }, angle: number) => ({
-      x: point.x * Math.cos(angle) - point.z * Math.sin(angle),
-      y: point.y,
-      z: point.x * Math.sin(angle) + point.z * Math.cos(angle),
+    // Pre-generate all base points
+    const basePoints: { x: number; y: number; z: number }[] = [];
+    edges.forEach(([i, j]) => {
+      const v1 = vertices[i], v2 = vertices[j];
+      for (let t = 0; t <= 1; t += 0.07) {
+        basePoints.push({ x: v1.x+(v2.x-v1.x)*t, y: v1.y+(v2.y-v1.y)*t, z: v1.z+(v2.z-v1.z)*t });
+      }
+    });
+    faces.forEach(([i, j, k]) => {
+      const v1 = vertices[i], v2 = vertices[j], v3 = vertices[k];
+      for (let u = 0; u <= 1; u += 0.15) {
+        for (let v = 0; v <= 1-u; v += 0.15) {
+          const w = 1-u-v;
+          basePoints.push({ x: v1.x*u+v2.x*v+v3.x*w, y: v1.y*u+v2.y*v+v3.y*w, z: v1.z*u+v2.z*v+v3.z*w });
+        }
+      }
     });
 
-    const rotateX = (point: { x: number; y: number; z: number }, angle: number) => ({
-      x: point.x,
-      y: point.y * Math.cos(angle) - point.z * Math.sin(angle),
-      z: point.y * Math.sin(angle) + point.z * Math.cos(angle),
-    });
+    const out: { x: number; y: number; z: number; char: string }[] = basePoints.map(() => ({ x:0,y:0,z:0,char:'' }));
 
-    const rotateZ = (point: { x: number; y: number; z: number }, angle: number) => ({
-      x: point.x * Math.cos(angle) - point.y * Math.sin(angle),
-      y: point.x * Math.sin(angle) + point.y * Math.cos(angle),
-      z: point.z,
-    });
+    const render = (timestamp: number) => {
+      frameRef.current = requestAnimationFrame(render);
+      if (timestamp - lastTime < FRAME_INTERVAL) return;
+      lastTime = timestamp;
 
-    const render = () => {
-      const rect = canvas.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const scale = Math.min(rect.width, rect.height) * 0.7;
-
+      ctx.clearRect(0, 0, width, height);
+      const cx = width / 2, cy = height / 2;
+      const scale = Math.min(width, height) * 0.7;
       ctx.font = "18px monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const points: { x: number; y: number; z: number; char: string }[] = [];
+      const cosY = Math.cos(time*0.4), sinY = Math.sin(time*0.4);
+      const cosX = Math.cos(time*0.3), sinX = Math.sin(time*0.3);
+      const cosZ = Math.cos(time*0.2), sinZ = Math.sin(time*0.2);
 
-      // Generate points along edges
-      edges.forEach(([i, j]) => {
-        const v1 = vertices[i];
-        const v2 = vertices[j];
+      for (let i = 0; i < basePoints.length; i++) {
+        let { x, y, z } = basePoints[i];
+        // rotateY
+        let nx = x*cosY - z*sinY; let nz = x*sinY + z*cosY; x=nx; z=nz;
+        // rotateX
+        let ny = y*cosX - z*sinX; nz = y*sinX + z*cosX; y=ny; z=nz;
+        // rotateZ
+        nx = x*cosZ - y*sinZ; ny = x*sinZ + y*cosZ; x=nx; y=ny;
+        const depth = (z+1.5)/3;
+        out[i].x = cx + x*scale;
+        out[i].y = cy - y*scale;
+        out[i].z = z;
+        out[i].char = chars[Math.min(Math.floor(depth*(chars.length-1)), chars.length-1)];
+      }
 
-        for (let t = 0; t <= 1; t += 0.05) {
-          let point = {
-            x: v1.x + (v2.x - v1.x) * t,
-            y: v1.y + (v2.y - v1.y) * t,
-            z: v1.z + (v2.z - v1.z) * t,
-          };
+      out.sort((a,b) => a.z-b.z);
 
-          // Apply rotations
-          point = rotateY(point, time * 0.4);
-          point = rotateX(point, time * 0.3);
-          point = rotateZ(point, time * 0.2);
-
-          const depth = (point.z + 1.5) / 3;
-          const charIndex = Math.floor(depth * (chars.length - 1));
-
-          points.push({
-            x: centerX + point.x * scale,
-            y: centerY - point.y * scale,
-            z: point.z,
-            char: chars[Math.min(charIndex, chars.length - 1)],
-          });
-        }
-      });
-
-      // Generate points on faces for a filled look
-      faces.forEach(([i, j, k]) => {
-        const v1 = vertices[i];
-        const v2 = vertices[j];
-        const v3 = vertices[k];
-
-        for (let u = 0; u <= 1; u += 0.12) {
-          for (let v = 0; v <= 1 - u; v += 0.12) {
-            const w = 1 - u - v;
-            let point = {
-              x: v1.x * u + v2.x * v + v3.x * w,
-              y: v1.y * u + v2.y * v + v3.y * w,
-              z: v1.z * u + v2.z * v + v3.z * w,
-            };
-
-            // Apply rotations
-            point = rotateY(point, time * 0.4);
-            point = rotateX(point, time * 0.3);
-            point = rotateZ(point, time * 0.2);
-
-            const depth = (point.z + 1.5) / 3;
-            const charIndex = Math.floor(depth * (chars.length - 1));
-
-            points.push({
-              x: centerX + point.x * scale,
-              y: centerY - point.y * scale,
-              z: point.z,
-              char: chars[Math.min(charIndex, chars.length - 1)],
-            });
-          }
-        }
-      });
-
-      // Sort by z for depth
-      points.sort((a, b) => a.z - b.z);
-
-      // Draw points
-      points.forEach((point) => {
-        const alpha = 0.15 + (point.z + 1.5) * 0.25;
-        ctx.fillStyle = `rgba(0, 0, 0, ${Math.min(alpha, 0.9)})`;
-        ctx.fillText(point.char, point.x, point.y);
-      });
+      for (let i = 0; i < out.length; i++) {
+        const p = out[i];
+        ctx.fillStyle = `rgba(0,0,0,${Math.min(0.15+(p.z+1.5)*0.25, 0.9).toFixed(2)})`;
+        ctx.fillText(p.char, p.x, p.y);
+      }
 
       time += 0.015;
-      frameRef.current = requestAnimationFrame(render);
     };
 
-    render();
+    frameRef.current = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      resizeObserver.disconnect();
       cancelAnimationFrame(frameRef.current);
     };
   }, []);
@@ -169,7 +116,7 @@ export function AnimatedTetrahedron() {
     <canvas
       ref={canvasRef}
       className="w-full h-full"
-      style={{ display: "block" }}
+      style={{ display: "block", willChange: "contents" }}
     />
   );
 }

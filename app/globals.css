@@ -87,9 +87,13 @@
   }
   body {
     @apply bg-background text-foreground;
+    touch-action: pan-y;
+    overscroll-behavior-y: none;
   }
   html {
     scroll-behavior: smooth;
+    /* Offset anchor links so they don't hide behind the fixed nav */
+    scroll-padding-top: 5rem;
   }
 }
 
@@ -105,10 +109,12 @@
   
   .marquee {
     animation: marquee 30s linear infinite;
+    will-change: transform;
   }
   
   .marquee-reverse {
     animation: marquee-reverse 25s linear infinite;
+    will-change: transform;
   }
 
   @keyframes marquee {
@@ -150,25 +156,24 @@
   .animate-char-in {
     animation: char-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     opacity: 0;
-    filter: blur(40px);
     transform: translateY(100%);
+    will-change: opacity, transform;
   }
   
   @keyframes char-in {
     0% {
       opacity: 0;
-      filter: blur(40px);
       transform: translateY(100%);
     }
     100% {
       opacity: 1;
-      filter: blur(0);
       transform: translateY(0);
     }
   }
 
   .noise-overlay {
     position: relative;
+    contain: layout style;
   }
   
   .noise-overlay::after {
@@ -179,6 +184,7 @@
     opacity: 0.03;
     pointer-events: none;
     z-index: 1;
+    will-change: auto;
   }
   
   .border-sketch {
