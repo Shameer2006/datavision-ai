@@ -334,6 +334,11 @@ export function FeaturesSection() {
             <br />
             <span className="text-muted-foreground">The simplicity of conversation.</span>
           </h2>
+          <p className={`mt-6 text-lg text-muted-foreground max-w-2xl transition-all duration-700 delay-100 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}>
+            DataVision AI replaces manual dashboard building with a natural language interface. No SQL, no drag-and-drop, no data scientist required — just ask and visualize.
+          </p>
         </div>
 
         {/* Features List */}

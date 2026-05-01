@@ -65,11 +65,15 @@ export const siteConfig: SiteConfig = {
     "ask questions to your data",
     "conversational analytics",
     "AI-powered data insights",
+    "talk to your database",
+    "natural language SQL",
     // No-code / low-code
     "no-code analytics",
     "no-code dashboards",
     "SQL-free data analysis",
     "build dashboards without code",
+    "no-code BI tool",
+    "drag and drop dashboard builder",
     // Use cases
     "automated business insights",
     "real-time data visualization",
@@ -77,17 +81,44 @@ export const siteConfig: SiteConfig = {
     "AI-powered dashboards",
     "interactive charts and graphs",
     "data exploration platform",
+    "automated data analysis",
+    "data storytelling tool",
+    "self-service analytics",
+    "embedded analytics",
     // Enterprise
     "enterprise analytics AI",
     "AI business intelligence",
     "enterprise data platform",
     "secure data analytics",
+    "enterprise BI software",
+    "large-scale data platform",
+    "multi-source data analytics",
+    // Comparisons / alternatives
+    "Tableau alternative",
+    "Power BI alternative",
+    "Looker alternative",
+    "Metabase alternative",
+    "better than Tableau",
+    "AI Tableau replacement",
+    // Verticals
+    "data analytics for startups",
+    "data analytics for enterprises",
+    "marketing analytics AI",
+    "sales analytics dashboard",
+    "finance analytics platform",
+    "e-commerce data analytics",
+    "SaaS analytics tool",
     // Long-tail
     "how to visualize data with AI",
     "best AI data visualization tool 2025",
     "data analysis without SQL",
     "smart dashboards",
     "data insights automation",
-    "AI data platform"
+    "AI data platform",
+    "turn CSV into dashboard",
+    "connect database and visualize",
+    "AI chart generator",
+    "auto generate charts from data",
+    "data dashboard in seconds"
   ]
 };

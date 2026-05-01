@@ -225,7 +225,7 @@ export function generateFAQSchema(): FAQSchema {
         name: "What is DataVision AI?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "DataVision AI is an AI-powered data visualization platform that lets you chat with your data and get instant, beautiful visualizations without writing code."
+          text: "DataVision AI is an AI-powered data visualization platform that lets you chat with your data and get instant, beautiful visualizations without writing code. Simply connect your data source and ask questions in plain English."
         }
       },
       {
@@ -233,7 +233,7 @@ export function generateFAQSchema(): FAQSchema {
         name: "How does DataVision AI work?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Simply connect your data source, type a question in plain English, and DataVision AI automatically generates charts, graphs, and insights in seconds using advanced AI."
+          text: "Simply connect your data source, type a question in plain English, and DataVision AI automatically generates charts, graphs, and insights in seconds using advanced AI and large language models."
         }
       },
       {
@@ -241,7 +241,7 @@ export function generateFAQSchema(): FAQSchema {
         name: "Is DataVision AI free to use?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes, DataVision AI offers a free trial. Paid plans are available for teams and enterprises needing advanced features and higher data limits."
+          text: "Yes, DataVision AI offers a free Starter plan with up to 3 projects and 1GB storage. Paid plans start at $29/month for growing teams, with Enterprise pricing available for large-scale operations."
         }
       },
       {
@@ -249,7 +249,7 @@ export function generateFAQSchema(): FAQSchema {
         name: "What data sources does DataVision AI support?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "DataVision AI supports 100+ data source types including databases, spreadsheets, APIs, and cloud storage services."
+          text: "DataVision AI supports 100+ data source types including SQL databases (PostgreSQL, MySQL, SQLite), NoSQL databases, CSV/Excel files, REST APIs, Google Sheets, and cloud storage services like S3 and BigQuery."
         }
       },
       {
@@ -257,7 +257,47 @@ export function generateFAQSchema(): FAQSchema {
         name: "Is my data secure with DataVision AI?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. DataVision AI uses 256-bit encryption and enterprise-grade security. We only process metadata, never storing your raw data."
+          text: "Yes. DataVision AI uses AES-256 encryption at rest and TLS 1.3 in transit. Our zero-knowledge architecture means we only process schema metadata, never storing or permanently accessing your raw data rows. We are built to align with SOC2, GDPR, and HIPAA requirements."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "How is DataVision AI different from Tableau or Power BI?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Unlike Tableau or Power BI which require manual chart building and SQL knowledge, DataVision AI lets you ask questions in plain English and generates visualizations automatically. There's no drag-and-drop required, no SQL, and insights appear in seconds instead of hours."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Do I need to know SQL or coding to use DataVision AI?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. DataVision AI is designed for non-technical users. You simply ask questions in plain English like 'Show me sales by region last quarter' and the AI handles all the query generation, chart selection, and data rendering automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "How quickly can I get started with DataVision AI?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "You can connect your first data source and get your first visualization in under 5 minutes. DataVision AI supports one-click integrations with the most popular databases and file formats, with no installation required."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Can multiple team members use DataVision AI together?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. DataVision AI Pro and Enterprise plans include team collaboration features, shared dashboards, role-based access controls, and real-time co-editing so your entire team can work with data together."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Does DataVision AI work with real-time data?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. DataVision AI supports real-time data connections, live dashboard updates, and streaming data sources. Your visualizations automatically refresh as your data changes, giving you always-current business insights."
         }
       }
     ]

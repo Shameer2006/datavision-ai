@@ -22,8 +22,8 @@ import { CtaSection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "DataVision AI - AI Data Visualization Platform",
-  description: "Transform raw data into stunning visualizations instantly. Chat with your data using AI, get automated insights, and build dashboards without code. Try free.",
+  title: "DataVision AI - AI Data Visualization & Analytics Platform",
+  description: "Transform raw data into stunning visualizations instantly. Chat with your data using AI, get automated insights, and build dashboards without code. The smart Tableau & Power BI alternative. Try free.",
   path: "/",
   keywords: [
     "AI data visualization tool",
@@ -40,7 +40,17 @@ export const metadata: Metadata = genMeta({
     "best data visualization tool 2025",
     "AI dashboard builder",
     "data analysis tool for non-technical users",
-    "turn data into insights automatically"
+    "turn data into insights automatically",
+    "Tableau alternative free",
+    "Power BI alternative AI",
+    "Looker alternative no-code",
+    "AI chart generator from data",
+    "connect database and visualize",
+    "auto generate dashboard from CSV",
+    "marketing analytics dashboard",
+    "sales analytics AI tool",
+    "self-service BI platform",
+    "talk to your database AI"
   ]
 });
 
