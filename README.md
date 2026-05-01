@@ -14,7 +14,7 @@
 
 DataVision AI is a modern SaaS landing page and platform built with **Next.js 16**, featuring a fully optimised SEO architecture, smooth in-page scrolling, rich structured data, and premium UI animations — all without a single line of manual SQL or complex dashboard configuration.
 
-**Live site:** [datavision.ai](https://datavision.ai)
+**Live site:** [datavision-ai.vercel.app](https://datavision-ai.vercel.app)
 
 ---
 
@@ -169,4 +169,4 @@ This repository is linked to a [v0](https://v0.app) project for AI-assisted UI d
 
 ## License
 
-MIT © [DataVision AI Team](https://datavision.ai)
+MIT © [DataVision AI Team](https://datavision-ai.vercel.app)

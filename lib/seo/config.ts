@@ -31,9 +31,9 @@ export const siteConfig: SiteConfig = {
   name: "DataVision AI",
   shortName: "DataVision",
   description: "AI-powered data visualization platform. Chat with your data, get instant visualizations, and discover insights in seconds.",
-  url: "https://datavision.ai",
-  ogImage: "https://datavision.ai/og-image.png",
-  logo: "https://datavision.ai/icon.svg",
+  url: "https://datavision-ai.vercel.app",
+  ogImage: "https://datavision-ai.vercel.app/og-image.png",
+  logo: "https://datavision-ai.vercel.app/icon.svg",
   links: {
     twitter: "https://twitter.com/datavisionai",
     linkedin: "https://linkedin.com/company/datavisionai",
