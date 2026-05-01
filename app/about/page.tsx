@@ -1,17 +1,27 @@
 import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo/metadata";
+import { generateBreadcrumbSchema, StructuredData } from "@/lib/seo/structured-data";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
-export const metadata: Metadata = {
-  title: "About | DataVision AI",
-  description: "Learn more about DataVision AI's mission to transform data into insights using artificial intelligence.",
-  keywords: ["AI data visualization", "DataVision AI mission", "automated analytics team", "data intelligence innovation"],
-};
+export const metadata: Metadata = genMeta({
+  title: "About Us",
+  description: "Learn about DataVision AI's mission to democratize data intelligence through AI-powered visualization and analytics.",
+  path: "/about",
+  keywords: ["about DataVision AI", "company mission", "AI data platform", "data intelligence innovation"]
+});
 
 export default function AboutPage() {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "About" }
+  ]);
+
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <Navigation />
+    <>
+      <StructuredData data={breadcrumbSchema} />
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <Navigation />
       
       <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[1400px] mx-auto">
         <div className="max-w-3xl">
@@ -53,5 +63,6 @@ export default function AboutPage() {
 
       <FooterSection />
     </main>
+    </>
   );
 }

@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo/metadata";
+import { generateBreadcrumbSchema, StructuredData } from "@/lib/seo/structured-data";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { Shield, Lock, EyeOff, ShieldCheck } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Security & Compliance | DataVision AI",
+export const metadata: Metadata = genMeta({
+  title: "Security & Compliance",
   description: "Learn how DataVision AI ensures your data stays safe with enterprise-grade security and encryption.",
-  keywords: ["enterprise data security", "AI encryption", "secure data visualization", "SOC2 compliance AI", "data protection"],
-};
+  path: "/security",
+  keywords: ["enterprise data security", "AI encryption", "secure data visualization", "SOC2 compliance", "data protection"]
+});
 
 export default function SecurityPage() {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Security" }
+  ]);
+
   const securityFeatures = [
     {
       icon: <Lock className="w-8 h-8" />,
@@ -34,8 +42,10 @@ export default function SecurityPage() {
   ];
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <Navigation />
+    <>
+      <StructuredData data={breadcrumbSchema} />
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <Navigation />
       
       <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[1400px] mx-auto">
         <div className="max-w-4xl">
@@ -79,5 +89,6 @@ export default function SecurityPage() {
 
       <FooterSection />
     </main>
+    </>
   );
 }

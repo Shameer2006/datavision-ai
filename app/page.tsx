@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 import { Navigation } from "@/components/landing/navigation";
 import { HeroSection } from "@/components/landing/hero-section";
 import { FeaturesSection } from "@/components/landing/features-section";
@@ -11,6 +13,20 @@ import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { PricingSection } from "@/components/landing/pricing-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
+
+export const metadata: Metadata = genMeta({
+  title: "DataVision AI - Transform Data Into Insights",
+  description: "AI-powered data visualization platform. Chat with your data, get instant visualizations, and discover insights in seconds.",
+  path: "/",
+  keywords: [
+    "AI data visualization",
+    "conversational analytics",
+    "data chat interface",
+    "automated insights",
+    "business intelligence platform",
+    "real-time data visualization"
+  ]
+});
 
 export default function Home() {
   return (

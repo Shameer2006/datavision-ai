@@ -1,18 +1,28 @@
 import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo/metadata";
+import { generateBreadcrumbSchema, StructuredData } from "@/lib/seo/structured-data";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { Mail, MessageCircle, MapPin, ArrowRight } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Contact Us | DataVision AI",
+export const metadata: Metadata = genMeta({
+  title: "Contact Us",
   description: "Get in touch with the DataVision AI team for support, sales inquiries, or partnership opportunities.",
-  keywords: ["contact DataVision AI", "AI support", "sales inquiry analytics", "customer help AI", "business data partnership"],
-};
+  path: "/contact",
+  keywords: ["contact DataVision AI", "AI support", "sales inquiry", "customer help", "partnership opportunities"]
+});
 
 export default function ContactPage() {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Contact" }
+  ]);
+
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <Navigation />
+    <>
+      <StructuredData data={breadcrumbSchema} />
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <Navigation />
       
       <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[1400px] mx-auto">
         <div className="grid lg:grid-cols-2 gap-24">
@@ -99,5 +109,6 @@ export default function ContactPage() {
 
       <FooterSection />
     </main>
+    </>
   );
 }

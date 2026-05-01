@@ -1,0 +1,11 @@
+PLACEHOLDER: This file should be replaced with an actual 1200x630px Open Graph image.
+
+To create a proper OG image:
+1. Design a 1200x630px image with your branding
+2. Include your logo and tagline
+3. Use high contrast colors
+4. Keep text large and readable
+5. Optimize to under 300KB
+6. Replace this file with the actual image
+
+For now, the metadata will reference this path, but you should create a proper image before deploying to production.

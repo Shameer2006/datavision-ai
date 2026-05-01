@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo/metadata";
+import { generateBreadcrumbSchema, StructuredData } from "@/lib/seo/structured-data";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | DataVision AI",
+export const metadata: Metadata = genMeta({
+  title: "Terms of Service",
   description: "Read our terms of service to understand the rules and guidelines for using DataVision AI.",
-  keywords: ["terms of service", "AI SaaS agreement", "DataVision usage policy", "legal service terms"],
-};
+  path: "/terms",
+  keywords: ["terms of service", "SaaS agreement", "usage policy", "legal terms"],
+  noIndex: true
+});
 
 export default function TermsPage() {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Terms of Service" }
+  ]);
+
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <Navigation />
+    <>
+      <StructuredData data={breadcrumbSchema} />
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <Navigation />
       
       <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[1400px] mx-auto">
         <div className="max-w-3xl">
@@ -64,5 +75,6 @@ export default function TermsPage() {
 
       <FooterSection />
     </main>
+    </>
   );
 }
