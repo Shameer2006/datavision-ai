@@ -30,9 +30,9 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { name: "Twitter", href: "#" },
-  { name: "GitHub", href: "#" },
-  { name: "LinkedIn", href: "#" },
+  { name: "Twitter", href: "https://twitter.com/datavisionai" },
+  { name: "GitHub", href: "https://github.com/datavisionai" },
+  { name: "LinkedIn", href: "https://linkedin.com/company/datavisionai" },
 ];
 
 export function FooterSection() {
@@ -49,7 +49,7 @@ export function FooterSection() {
           <div className="grid grid-cols-2 md:grid-cols-6 gap-12 lg:gap-8">
             {/* Brand Column */}
             <div className="col-span-2">
-              <a href="#" className="inline-flex items-center gap-2 mb-6">
+              <a href="/" aria-label="DataVision AI - Home" className="inline-flex items-center gap-2 mb-6">
                 <span className="text-2xl font-display">DataVision AI</span>
               </a>
 
@@ -58,11 +58,14 @@ export function FooterSection() {
               </p>
 
               {/* Social Links */}
-              <div className="flex gap-6">
+              <div className="flex gap-6 mb-6">
                 {socialLinks.map((link) => (
                   <a
                     key={link.name}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer me"
+                    aria-label={`DataVision AI on ${link.name}`}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group"
                   >
                     {link.name}
@@ -70,6 +73,11 @@ export function FooterSection() {
                   </a>
                 ))}
               </div>
+              <address className="not-italic text-xs text-muted-foreground/60 leading-relaxed">
+                San Francisco, CA
+                <br />
+                <a href="mailto:hello@datavision.ai" className="hover:text-foreground transition-colors">hello@datavision.ai</a>
+              </address>
             </div>
 
             {/* Link Columns */}
@@ -101,7 +109,7 @@ export function FooterSection() {
         {/* Bottom Bar */}
         <div className="py-8 border-t border-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            2025 DataVision AI. All rights reserved.
+            &copy; 2026 DataVision AI. All rights reserved.
           </p>
 
           <div className="flex items-center gap-4 text-sm text-muted-foreground">

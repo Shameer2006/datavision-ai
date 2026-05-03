@@ -163,24 +163,10 @@ export function HowItWorksSection() {
                     <div 
                       key={`${activeStep}-${lineIndex}`} 
                       className="leading-loose code-line-reveal"
-                      style={{ 
-                        animationDelay: `${lineIndex * 80}ms`,
-                      }}
+                      style={{ animationDelay: `${lineIndex * 60}ms` }}
                     >
                       <span className="text-background/20 select-none w-8 inline-block">{lineIndex + 1}</span>
-                      <span className="inline-flex">
-                        {line.split('').map((char, charIndex) => (
-                          <span
-                            key={`${activeStep}-${lineIndex}-${charIndex}`}
-                            className="code-char-reveal"
-                            style={{
-                              animationDelay: `${lineIndex * 80 + charIndex * 15}ms`,
-                            }}
-                          >
-                            {char === ' ' ? '\u00A0' : char}
-                          </span>
-                        ))}
-                      </span>
+                      <span>{line || '\u00A0'}</span>
                     </div>
                   ))}
                 </pre>
@@ -205,27 +191,12 @@ export function HowItWorksSection() {
         .code-line-reveal {
           opacity: 0;
           transform: translateX(-8px);
-          animation: lineReveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: lineReveal 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          will-change: opacity, transform;
         }
         
         @keyframes lineReveal {
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        .code-char-reveal {
-          opacity: 0;
-          filter: blur(8px);
-          animation: charReveal 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-        
-        @keyframes charReveal {
-          to {
-            opacity: 1;
-            filter: blur(0);
-          }
+          to { opacity: 1; transform: translateX(0); }
         }
       `}</style>
     </section>

@@ -2,10 +2,12 @@ import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { getDefaultMetadata } from '@/lib/seo/metadata'
 import { 
   generateOrganizationSchema, 
   generateWebSiteSchema,
+  generateLocalBusinessSchema,
   StructuredData 
 } from '@/lib/seo/structured-data'
 import './globals.css'
@@ -29,7 +31,22 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap'
 });
 
-export const metadata: Metadata = getDefaultMetadata();
+export const metadata: Metadata = {
+  ...getDefaultMetadata(),
+  manifest: "/manifest.json",
+  verification: {
+    google: "google28b6dbf4d718a7b0",
+  },
+  category: "technology",
+  icons: {
+    icon: [
+      { url: "/icon-light-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" }
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+    shortcut: "/icon-light-32x32.png"
+  }
+};
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -48,16 +65,25 @@ export default function RootLayout({
 }>) {
   const organizationSchema = generateOrganizationSchema();
   const websiteSchema = generateWebSiteSchema();
+  const localBusinessSchema = generateLocalBusinessSchema();
 
   return (
-    <html lang="en">
+    <html lang="en" dir="ltr">
       <head>
+        {/* DNS prefetch & preconnect for performance + crawl hints */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+        {/* Structured data */}
         <StructuredData data={organizationSchema} />
         <StructuredData data={websiteSchema} />
+        <StructuredData data={localBusinessSchema} />
       </head>
       <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

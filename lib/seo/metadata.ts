@@ -58,12 +58,45 @@ export function generateMetadata({
       title: fullTitle,
       description: optimizedDescription,
       keywords: [...siteConfig.keywords, ...keywords],
-      authors: [{ name: siteConfig.creator }],
+      authors: [{ name: siteConfig.creator, url: siteConfig.url }],
       creator: siteConfig.creator,
       publisher: siteConfig.name,
-      robots: noIndex ? "noindex,nofollow" : "index,follow",
+      applicationName: siteConfig.shortName,
+      generator: "Next.js",
+      referrer: "origin-when-cross-origin",
+      category: "technology",
+      classification: "Business Software",
+      robots: noIndex
+        ? { index: false, follow: false }
+        : {
+            index: true,
+            follow: true,
+            nocache: false,
+            googleBot: {
+              index: true,
+              follow: true,
+              noimageindex: false,
+              "max-video-preview": -1,
+              "max-image-preview": "large",
+              "max-snippet": -1
+            }
+          },
       alternates: {
-        canonical: url
+        canonical: url,
+        languages: {
+          "en-US": url,
+          "x-default": url
+        }
+      },
+      formatDetection: {
+        email: false,
+        address: false,
+        telephone: false
+      },
+      appleWebApp: {
+        capable: true,
+        title: siteConfig.shortName,
+        statusBarStyle: "default"
       },
       openGraph: {
         type: "website",
@@ -77,7 +110,8 @@ export function generateMetadata({
             url: ogImage,
             width: 1200,
             height: 630,
-            alt: title
+            alt: `${title} - ${siteConfig.name}`,
+            type: "image/png"
           }
         ],
         ...(publishedTime && { publishedTime }),
@@ -85,10 +119,16 @@ export function generateMetadata({
       },
       twitter: {
         card: "summary_large_image",
+        site: siteConfig.twitterHandle,
         title: fullTitle,
         description: optimizedDescription,
-        images: [ogImage],
-        creator: "@datavisionai"
+        images: [
+          {
+            url: ogImage,
+            alt: `${title} - ${siteConfig.name}`
+          }
+        ],
+        creator: siteConfig.twitterHandle
       },
       metadataBase: new URL(siteConfig.url)
     };

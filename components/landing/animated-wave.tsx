@@ -10,63 +10,64 @@ export function AnimatedWave() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const chars = "·∘○◯◌●◉";
     let time = 0;
+    let lastTime = 0;
+    const FRAME_INTERVAL = 1000 / 24; // 24fps is enough for a background wave
+    let width = 0, height = 0, cols = 0, rows = 0;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
+      cols = Math.floor(width / 20);
+      rows = Math.floor(height / 20);
     };
 
     resize();
-    window.addEventListener("resize", resize);
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
 
-    const render = () => {
-      const rect = canvas.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
+    const render = (timestamp: number) => {
+      frameRef.current = requestAnimationFrame(render);
+      if (timestamp - lastTime < FRAME_INTERVAL) return;
+      lastTime = timestamp;
 
+      ctx.clearRect(0, 0, width, height);
       ctx.font = "14px monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const cols = Math.floor(rect.width / 20);
-      const rows = Math.floor(rect.height / 20);
+      const colW = width / cols;
+      const rowH = height / rows;
 
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
-          const px = (x + 0.5) * (rect.width / cols);
-          const py = (y + 0.5) * (rect.height / rows);
-
-          // Multiple wave interference
           const wave1 = Math.sin(x * 0.2 + time * 2) * Math.cos(y * 0.15 + time);
           const wave2 = Math.sin((x + y) * 0.1 + time * 1.5);
-          const wave3 = Math.cos(x * 0.1 - y * 0.1 + time * 0.8);
-          
-          const combined = (wave1 + wave2 + wave3) / 3;
+          const combined = (wave1 + wave2) / 2;
           const normalized = (combined + 1) / 2;
-          
           const charIndex = Math.floor(normalized * (chars.length - 1));
-          const alpha = 0.15 + normalized * 0.5;
-
-          ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
-          ctx.fillText(chars[charIndex], px, py);
+          const alpha = (0.15 + normalized * 0.5).toFixed(2);
+          ctx.fillStyle = `rgba(0,0,0,${alpha})`;
+          ctx.fillText(chars[charIndex], (x + 0.5) * colW, (y + 0.5) * rowH);
         }
       }
 
       time += 0.03;
-      frameRef.current = requestAnimationFrame(render);
     };
 
-    render();
+    frameRef.current = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      resizeObserver.disconnect();
       cancelAnimationFrame(frameRef.current);
     };
   }, []);
@@ -75,7 +76,7 @@ export function AnimatedWave() {
     <canvas
       ref={canvasRef}
       className="w-full h-full"
-      style={{ display: "block" }}
+      style={{ display: "block", willChange: "contents" }}
     />
   );
 }

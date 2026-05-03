@@ -6,10 +6,10 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { Mail, MessageCircle, MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = genMeta({
-  title: "Contact Us",
-  description: "Get in touch with the DataVision AI team for support, sales inquiries, or partnership opportunities.",
+  title: "Contact DataVision AI - Sales, Support & Partnerships",
+  description: "Reach the DataVision AI team for a product demo, enterprise sales, technical support, or partnership inquiries. We're based in San Francisco, CA.",
   path: "/contact",
-  keywords: ["contact DataVision AI", "AI support", "sales inquiry", "customer help", "partnership opportunities"]
+  keywords: ["contact DataVision AI", "AI analytics demo", "enterprise sales", "data platform support", "partnership DataVision"]
 });
 
 export default function ContactPage() {
