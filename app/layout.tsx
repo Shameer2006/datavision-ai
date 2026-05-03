@@ -37,15 +37,7 @@ export const metadata: Metadata = {
   verification: {
     google: "google28b6dbf4d718a7b0",
   },
-  category: "technology",
-  icons: {
-    icon: [
-      { url: "/icon-light-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icon.svg", type: "image/svg+xml" }
-    ],
-    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
-    shortcut: "/icon-light-32x32.png"
-  }
+  category: "technology"
 };
 
 export const viewport: Viewport = {
@@ -68,7 +60,7 @@ export default function RootLayout({
   const localBusinessSchema = generateLocalBusinessSchema();
 
   return (
-    <html lang="en" dir="ltr">
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
         {/* DNS prefetch & preconnect for performance + crawl hints */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,7 +72,7 @@ export default function RootLayout({
         <StructuredData data={websiteSchema} />
         <StructuredData data={localBusinessSchema} />
       </head>
-      <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+      <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`} suppressHydrationWarning>
         {children}
         <Analytics />
         <SpeedInsights />
