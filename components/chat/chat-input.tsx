@@ -95,11 +95,11 @@ export function ChatInput({ onSend, isTyping }: ChatInputProps) {
           onChange={handleInput}
           onKeyDown={handleKeyDown}
           placeholder="Message DataVision AI..."
-          className="min-h-[52px] w-full resize-none border-0 bg-transparent py-3.5 pr-24 pl-4 focus-visible:ring-0 focus-visible:ring-offset-0 overflow-y-auto"
+          className="min-h-[52px] w-full resize-none border-0 bg-transparent py-3.5 pr-12 pl-12 focus-visible:ring-0 focus-visible:ring-offset-0 overflow-y-auto"
           rows={1}
           style={{ maxHeight: "200px" }}
         />
-        <div className="absolute right-2 bottom-2 flex items-center gap-1">
+        <div className="absolute left-2 bottom-2 flex items-center">
           <Button
             variant="ghost"
             size="icon"
@@ -110,6 +110,8 @@ export function ChatInput({ onSend, isTyping }: ChatInputProps) {
             <PaperclipIcon className="h-4 w-4" />
             <span className="sr-only">Attach file</span>
           </Button>
+        </div>
+        <div className="absolute right-2 bottom-2 flex items-center">
           <Button
             size="icon"
             className="h-8 w-8 rounded-full transition-all"

@@ -16,9 +16,22 @@ import { ChatSidebar } from "./chat-sidebar";
 interface ChatHeaderProps {
   currentModel: string;
   onModelChange: (model: string) => void;
+  activeChatId?: string;
+  onSelectChat?: (id: string) => void;
+  onNewChat?: () => void;
+  onDeleteChat?: (id: string) => void;
+  sidebarRefreshKey?: number;
 }
 
-export function ChatHeader({ currentModel, onModelChange }: ChatHeaderProps) {
+export function ChatHeader({
+  currentModel,
+  onModelChange,
+  activeChatId,
+  onSelectChat,
+  onNewChat,
+  onDeleteChat,
+  sidebarRefreshKey,
+}: ChatHeaderProps) {
   const { setTheme, theme } = useTheme();
 
   return (
@@ -34,7 +47,13 @@ export function ChatHeader({ currentModel, onModelChange }: ChatHeaderProps) {
             <span className="sr-only">Toggle sidebar</span>
           </SheetTrigger>
           <SheetContent side="left" className="w-[260px] p-0">
-            <ChatSidebar />
+            <ChatSidebar
+              activeChatId={activeChatId}
+              onSelectChat={onSelectChat}
+              onNewChat={onNewChat}
+              onDeleteChat={onDeleteChat}
+              refreshKey={sidebarRefreshKey}
+            />
           </SheetContent>
         </Sheet>
 
