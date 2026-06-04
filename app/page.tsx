@@ -17,6 +17,8 @@ import {
   type Conversation,
 } from "@/lib/chat-store";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+
 export default function Home() {
   const [activeChat, setActiveChat] = React.useState<Conversation | null>(null);
   const [messages, setMessages] = React.useState<Message[]>([]);
@@ -144,7 +146,7 @@ export default function Home() {
         formData.append("cached_df_json", cachedDfJson);
       }
 
-      const response = await fetch("http://localhost:8000/api/chat", {
+      const response = await fetch(`${BACKEND_URL}/api/chat`, {
         method: "POST",
         body: formData,
       });
@@ -188,7 +190,7 @@ export default function Home() {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please make sure the backend server is running on http://localhost:8000.`,
+        content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please make sure the backend server is running on ${BACKEND_URL}.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 

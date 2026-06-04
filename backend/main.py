@@ -3,6 +3,7 @@ DataVision AI - FastAPI Backend
 Handles file uploads, schema extraction, AI chat, and Plotly chart generation.
 """
 
+import os
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from services.data_processor import extract_schema
@@ -17,10 +18,16 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS configuration — allow the Next.js frontend
+# CORS configuration — allow local development and production frontends
+allowed_origins = ["http://localhost:3000", "http://localhost:3001"]
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    # Ensure it doesn't have a trailing slash
+    allowed_origins.append(frontend_url.rstrip("/"))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
