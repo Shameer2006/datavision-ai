@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Upload, BarChart3, Sparkles } from "lucide-react";
 
 export function HeroSection() {
@@ -30,20 +29,6 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-foreground/10 bg-foreground/5 backdrop-blur-sm text-sm text-muted-foreground mb-8">
             <Sparkles className="h-3.5 w-3.5 text-blue-500" />
             <span>AI-Powered Data Analytics Platform</span>
-          </div>
-        </div>
-
-        {/* Logo Mark */}
-        <div className="animate-fade-in-up animation-delay-100 flex justify-center mb-8">
-          <div className="relative h-20 w-20 lg:h-24 lg:w-24 rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/20 ring-1 ring-white/10">
-            <Image
-              src="/icon.png"
-              alt="DataVision AI"
-              width={96}
-              height={96}
-              className="object-cover"
-              priority
-            />
           </div>
         </div>
 

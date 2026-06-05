@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -14,11 +16,21 @@ const navLinks = [
 export function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  const [user, setUser] = React.useState<User | null>(null);
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  React.useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
   }, []);
 
   return (
@@ -62,12 +74,21 @@ export function Navigation() {
             </Link>
           ))}
           <div className="w-px h-6 bg-foreground/10 mx-2" />
-          <Link
-            href="/chat"
-            className="ml-1 px-5 py-2 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-all duration-200 hover:shadow-lg hover:shadow-foreground/5"
-          >
-            Open App
-          </Link>
+          {user ? (
+            <Link
+              href="/chat"
+              className="ml-1 px-5 py-2 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-all duration-200 hover:shadow-lg hover:shadow-foreground/5"
+            >
+              Open App
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="ml-1 px-5 py-2 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-all duration-200 hover:shadow-lg hover:shadow-foreground/5"
+            >
+              Sign In
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
