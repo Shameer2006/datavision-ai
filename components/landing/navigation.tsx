@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { Menu, X, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -34,8 +35,15 @@ export function Navigation() {
           href="/"
           className="flex items-center gap-2.5 group"
         >
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-background transition-transform duration-300 group-hover:scale-105">
-            <Sparkles className="h-4 w-4" />
+          <div className="relative h-8 w-8 overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-105">
+            <Image
+              src="/icon.png"
+              alt="DataVision AI Logo"
+              width={32}
+              height={32}
+              className="object-cover"
+              priority
+            />
           </div>
           <span className="text-lg font-semibold tracking-tight">
             DataVision

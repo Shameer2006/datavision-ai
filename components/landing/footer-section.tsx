@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import Image from "next/image";
 
 const footerLinks = {
   product: [
@@ -22,8 +22,14 @@ export function FooterSection() {
           {/* Branding */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground text-background">
-                <Sparkles className="h-4 w-4" />
+              <div className="relative h-8 w-8 overflow-hidden rounded-lg">
+                <Image
+                  src="/icon.png"
+                  alt="DataVision AI Logo"
+                  width={32}
+                  height={32}
+                  className="object-cover"
+                />
               </div>
               <span className="text-lg font-semibold tracking-tight">
                 DataVision

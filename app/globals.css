@@ -150,4 +150,39 @@
       transform: translateY(0);
     }
   }
+
+  /* Landing page entrance animations */
+  .animate-fade-in-up {
+    opacity: 0;
+    animation: fadeInUpLanding 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animation-delay-100 { animation-delay: 0.1s; }
+  .animation-delay-200 { animation-delay: 0.2s; }
+  .animation-delay-300 { animation-delay: 0.35s; }
+  .animation-delay-400 { animation-delay: 0.5s; }
+  .animation-delay-500 { animation-delay: 0.65s; }
+
+  @keyframes fadeInUpLanding {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ambient blob floating */
+  .animate-blob-float {
+    animation: blobFloat 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes blobFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 15px) scale(0.95); }
+    100% { transform: translate(10px, -10px) scale(1.02); }
+  }
 }
