@@ -5,7 +5,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "Privacy Policy",
+  title: "Privacy Policy — DataVision AI",
   description: "Read the DataVision AI Privacy Policy to understand how we collect, use, and protect your personal data and uploaded datasets.",
   path: "/privacy",
   keywords: ["DataVision AI privacy policy", "data privacy", "GDPR compliance", "user data protection"],
@@ -15,7 +15,7 @@ export const metadata: Metadata = genMeta({
 export default function PrivacyPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", path: "/" },
-    { name: "Privacy Policy" }
+    { name: "Privacy Policy", path: "/privacy" }
   ]);
 
   return (
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
             Legal
           </span>
           <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-12">
-            Privacy Policy.
+            Privacy Policy
           </h1>
           
           <div className="space-y-12 text-lg text-muted-foreground leading-relaxed">

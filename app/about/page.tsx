@@ -14,7 +14,7 @@ export const metadata: Metadata = genMeta({
 export default function AboutPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", path: "/" },
-    { name: "About" }
+    { name: "About DataVision AI", path: "/about" }
   ]);
 
   return (
@@ -30,9 +30,7 @@ export default function AboutPage() {
             Our Story
           </span>
           <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-12">
-            Democratizing data 
-            <br />
-            intelligence through AI.
+            About DataVision AI
           </h1>
           
           <div className="space-y-8 text-lg text-muted-foreground leading-relaxed">

@@ -12,14 +12,6 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
-function generateApiKey() {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const segments = [8, 4, 4, 4, 12];
-  return "dv_" + segments.map(len =>
-    Array.from({ length: len }, () => chars[Math.floor(Math.random() * chars.length)]).join("")
-  ).join("-");
-}
-
 type Profile = { name: string; email: string; avatar_url: string };
 type Credits = { balance: number; total_used: number };
 type ApiKey = { id: string; key_hash: string; key_preview: string; label: string; created_at: string; last_used_at: string | null; revoked: boolean };
@@ -32,9 +24,12 @@ export default function AccountPage() {
   const [userId, setUserId] = React.useState<string | null>(null);
   const [profile, setProfile] = React.useState<Profile>({ name: "", email: "", avatar_url: "" });
   const [credits, setCredits] = React.useState<Credits>({ balance: 0, total_used: 0 });
+  const [plan, setPlan] = React.useState<{ name: string; max_api_keys: number; rate_limit_per_minute: number; rate_limit_per_day: number } | null>(null);
+  const [resets_at, setResetsAt] = React.useState<string | null>(null);
   const [apiKeys, setApiKeys] = React.useState<ApiKey[]>([]);
   const [chatCount, setChatCount] = React.useState(0);
   const [messageCount, setMessageCount] = React.useState(0);
+  const [usageByDay, setUsageByDay] = React.useState<Record<string, { credits: number; requests: number }>>({});
 
   const [profileSaved, setProfileSaved] = React.useState(false);
   const [copied, setCopied] = React.useState<string | null>(null);
@@ -49,17 +44,20 @@ export default function AccountPage() {
       if (!user) { router.push("/login"); return; }
       setUserId(user.id);
 
-      const [{ data: prof }, { data: cred }, { data: keys }] = await Promise.all([
+      const [{ data: prof }, creditsRes, keysRes, usageRes] = await Promise.all([
         supabase.from("profiles").select("*").eq("id", user.id).single(),
-        supabase.from("credits").select("*").eq("user_id", user.id).single(),
-        supabase.from("api_keys").select("*").eq("user_id", user.id).eq("revoked", false).order("created_at", { ascending: false }),
+        fetch("/api/credits").then(r => r.json()),
+        fetch("/api/keys").then(r => r.json()),
+        fetch("/api/usage").then(r => r.json()),
       ]);
 
       if (prof) setProfile({ name: prof.name || "", email: prof.email || "", avatar_url: prof.avatar_url || "" });
-      if (cred) setCredits({ balance: cred.balance, total_used: cred.total_used });
-      if (keys) setApiKeys(keys);
+      if (creditsRes.credits) setCredits({ balance: creditsRes.credits.balance, total_used: creditsRes.credits.total_used });
+      if (creditsRes.credits?.resets_at) setResetsAt(creditsRes.credits.resets_at);
+      if (creditsRes.plan?.plans) setPlan(creditsRes.plan.plans as { name: string; max_api_keys: number; rate_limit_per_minute: number; rate_limit_per_day: number });
+      if (keysRes.keys) setApiKeys(keysRes.keys);
+      if (usageRes.usage) setUsageByDay(usageRes.usage);
 
-      // Chat counts from localStorage
       try {
         const raw = localStorage.getItem("datavision_chats");
         if (raw) {
@@ -84,21 +82,19 @@ export default function AccountPage() {
   const handleGenerateKey = async () => {
     if (!userId) return;
     setGenerating(true);
-    const raw = generateApiKey();
-    const preview = raw.slice(0, 10) + "••••••••••••" + raw.slice(-4);
-
-    // Store hash (in production hash with SHA-256; here we store the raw for simplicity)
-    const { data } = await supabase.from("api_keys").insert({
-      user_id: userId,
-      key_hash: raw,
-      key_preview: preview,
-      label: "Default",
-    }).select().single();
-
-    if (data) {
-      setApiKeys(prev => [data, ...prev]);
-      setNewKeyValue(raw);
+    const res = await fetch("/api/keys", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "Default" }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.error || "Failed to create key");
+      setGenerating(false);
+      return;
     }
+    setApiKeys(prev => [data.key, ...prev]);
+    setNewKeyValue(data.rawKey);
     setGenerating(false);
   };
 
@@ -110,9 +106,11 @@ export default function AccountPage() {
 
   const handleRevoke = async (id: string) => {
     if (!window.confirm("Revoke this API key? Any integrations using it will stop working.")) return;
-    await supabase.from("api_keys").update({ revoked: true }).eq("id", id);
-    setApiKeys(prev => prev.filter(k => k.id !== id));
-    if (newKeyValue) setNewKeyValue(null);
+    const res = await fetch(`/api/keys/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      setApiKeys(prev => prev.filter(k => k.id !== id));
+      if (newKeyValue) setNewKeyValue(null);
+    }
   };
 
   const handleSignOut = async () => {
@@ -285,18 +283,23 @@ export default function AccountPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-zinc-100">API Credits</h3>
+                    {plan && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 mt-0.5">
+                        {plan.name} Plan
+                      </span>
+                    )}
                   </div>
                 </div>
                 
                 <div className="space-y-6 relative z-10">
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="text-4xl font-bold text-zinc-100">{credits.balance}</p>
+                      <p className="text-4xl font-bold text-zinc-100">{credits.balance.toLocaleString()}</p>
                       <p className="text-sm text-zinc-400 mt-1">credits remaining</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-medium text-zinc-300">{credits.total_used}</p>
-                      <p className="text-xs text-zinc-500">used this billing cycle</p>
+                      <p className="text-lg font-medium text-zinc-300">{credits.total_used.toLocaleString()}</p>
+                      <p className="text-xs text-zinc-500">used this cycle</p>
                     </div>
                   </div>
                   
@@ -309,7 +312,50 @@ export default function AccountPage() {
                         <div className="absolute inset-0 bg-white/20 animate-pulse" />
                       </div>
                     </div>
-                    <p className="text-xs text-zinc-500">Usage resets in 12 days</p>
+                    <div className="flex justify-between text-xs text-zinc-500">
+                      <span>Resets {resets_at ? new Date(resets_at).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : "—"}</span>
+                      {plan && <span>{plan.rate_limit_per_minute} req/min · {plan.rate_limit_per_day} req/day</span>}
+                    </div>
+                  </div>
+
+                  {/* 7-day usage mini chart */}
+                  {Object.keys(usageByDay).length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Last 7 Days</p>
+                      <div className="flex items-end gap-1 h-12">
+                        {Object.entries(usageByDay).map(([day, val]) => {
+                          const maxCredits = Math.max(...Object.values(usageByDay).map(v => v.credits), 1);
+                          const pct = Math.round((val.credits / maxCredits) * 100);
+                          return (
+                            <div key={day} className="flex-1 flex flex-col items-center gap-1 group relative">
+                              <div
+                                className="w-full rounded-sm bg-amber-500/60 hover:bg-amber-400 transition-all"
+                                style={{ height: `${Math.max(pct, 4)}%` }}
+                              />
+                              <span className="text-[8px] text-zinc-600">
+                                {new Date(day).toLocaleDateString(undefined, { weekday: "short" }).slice(0, 2)}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Credit costs reference */}
+                  <div className="pt-2 border-t border-white/5 space-y-1.5">
+                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">Credit Costs</p>
+                    {[
+                      { label: "Chat with file upload", cost: 8 },
+                      { label: "Chat follow-up",        cost: 4 },
+                      { label: "API /analyze",          cost: 6 },
+                      { label: "API /chart",            cost: 4 },
+                    ].map(({ label, cost }) => (
+                      <div key={label} className="flex justify-between text-xs">
+                        <span className="text-zinc-400">{label}</span>
+                        <span className="text-amber-400 font-semibold">{cost} credits</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -362,13 +408,15 @@ export default function AccountPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-zinc-100">Developer API</h3>
-                    <p className="text-sm text-zinc-400">Manage your access keys</p>
+                    <p className="text-sm text-zinc-400">
+                      {apiKeys.length} / {plan?.max_api_keys ?? 1} keys used
+                    </p>
                   </div>
                 </div>
                 <button
                   onClick={handleGenerateKey}
-                  disabled={generating}
-                  className="h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-semibold transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-60"
+                  disabled={generating || (plan ? apiKeys.length >= plan.max_api_keys : apiKeys.length >= 1)}
+                  className="h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-semibold transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {generating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <KeyRound className="h-4 w-4" />}
                   {generating ? "Generating…" : "Create Key"}
@@ -414,8 +462,9 @@ export default function AccountPage() {
                             </code>
                           </div>
                           <p className="text-xs text-zinc-500 mt-1">
-                            Created {new Date(key.created_at).toLocaleDateString()} 
+                            Created {new Date(key.created_at).toLocaleDateString()}
                             {key.last_used_at ? ` · Last used ${new Date(key.last_used_at).toLocaleDateString()}` : " · Never used"}
+                            {" · "}{(key as ApiKey & { total_requests?: number }).total_requests ?? 0} requests
                           </p>
                         </div>
                       </div>

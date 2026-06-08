@@ -12,6 +12,8 @@ interface RouteConfig {
 const routes: RouteConfig[] = [
   { path: "/",         priority: 1.0, changeFrequency: "weekly"  },
   { path: "/about",    priority: 0.8, changeFrequency: "monthly" },
+  { path: "/faq",      priority: 0.8, changeFrequency: "monthly" },
+  { path: "/blog/api-integration", priority: 0.8, changeFrequency: "monthly" },
   { path: "/security", priority: 0.7, changeFrequency: "yearly"  },
   { path: "/contact",  priority: 0.7, changeFrequency: "monthly" },
   { path: "/privacy",  priority: 0.4, changeFrequency: "yearly"  },

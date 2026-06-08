@@ -6,8 +6,7 @@ import { ChatHeader } from "@/components/chat/chat-header";
 import { ChatMessages } from "@/components/chat/chat-messages";
 import { ChatInput } from "@/components/chat/chat-input";
 import { Message } from "@/components/chat/message-bubble";
-import {
-  createConversation,
+import { createConversation,
   getConversation,
   saveConversation,
   deleteConversation,
@@ -16,9 +15,6 @@ import {
   getAllConversations,
   type Conversation,
 } from "@/lib/chat-store";
-import { createClient } from "@/lib/supabase/client";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function ChatPage() {
   // -- active conversation state --
@@ -29,7 +25,6 @@ export default function ChatPage() {
   const [cachedSchema, setCachedSchema] = React.useState<string>("");
   const [cachedDfJson, setCachedDfJson] = React.useState<string>("");
   const [isDragging, setIsDragging] = React.useState(false);
-  const supabase = createClient();
 
   // bumped whenever sidebar needs re-reading
   const [sidebarRefresh, setSidebarRefresh] = React.useState(0);
@@ -165,38 +160,6 @@ export default function ChatPage() {
     refreshSidebar();
 
     try {
-      const { data: { user: authUser } } = await supabase.auth.getUser();
-
-      // Credit Pre-flight Check
-      if (authUser) {
-        const { data: credits } = await supabase
-          .from("credits")
-          .select("balance, total_used")
-          .eq("user_id", authUser.id)
-          .single();
-
-        if (credits && credits.balance <= 0) {
-          const outOfCreditsMessage: Message = {
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: "You have run out of credits. Please upgrade your plan or generate a new API key to continue using DataVision AI.",
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          };
-
-          const originConv = getConversation(originChatId);
-          if (originConv) {
-            originConv.messages = [...originConv.messages, outOfCreditsMessage];
-            saveConversation(originConv);
-            refreshSidebar();
-          }
-
-          if (activeChatRef.current === originChatId) {
-            setMessages((prev) => [...prev, outOfCreditsMessage]);
-          }
-          setIsTyping(false);
-          return;
-        }
-      }
       const formData = new FormData();
       formData.append("message", content);
       if (file) {
@@ -206,17 +169,17 @@ export default function ChatPage() {
         formData.append("cached_df_json", cachedDfJson);
       }
 
-      const response = await fetch(`${BACKEND_URL}/api/chat`, {
+      // Call Next.js API route — handles credits + rate limits server-side
+      const response = await fetch("/api/chat", {
         method: "POST",
         body: formData,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: "Server error" }));
-        throw new Error(errorData.detail || `Server error: ${response.status}`);
-      }
-
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `Error ${response.status}`);
+      }
 
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -226,7 +189,6 @@ export default function ChatPage() {
         plotly_config: data.plotly_config || null,
       };
 
-      // Always save the response to the ORIGINATING conversation in storage
       const originConv = getConversation(originChatId);
       if (originConv) {
         originConv.messages = [...originConv.messages, aiResponse];
@@ -238,7 +200,6 @@ export default function ChatPage() {
         refreshSidebar();
       }
 
-      // Only update the UI if the user is still viewing the same chat
       if (activeChatRef.current === originChatId) {
         if (data.cached_schema) {
           setCachedSchema(data.cached_schema);
@@ -246,30 +207,11 @@ export default function ChatPage() {
         }
         setMessages((prev) => [...prev, aiResponse]);
       }
-
-      // Deduct credit upon successful response
-      if (authUser) {
-        const { data: credits } = await supabase
-          .from("credits")
-          .select("balance, total_used")
-          .eq("user_id", authUser.id)
-          .single();
-
-        if (credits) {
-          await supabase
-            .from("credits")
-            .update({
-              balance: Math.max(0, credits.balance - 1),
-              total_used: credits.total_used + 1,
-            })
-            .eq("user_id", authUser.id);
-        }
-      }
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please make sure the backend server is running on ${BACKEND_URL}.`,
+        content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please try again.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 

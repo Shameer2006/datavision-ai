@@ -5,7 +5,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "Terms of Service",
+  title: "Terms of Service — DataVision AI",
   description: "Read the DataVision AI Terms of Service to understand the rules, license, and guidelines for using our AI-powered data analytics platform.",
   path: "/terms",
   keywords: ["DataVision AI terms of service", "SaaS terms", "usage policy", "platform agreement"],
@@ -15,7 +15,7 @@ export const metadata: Metadata = genMeta({
 export default function TermsPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", path: "/" },
-    { name: "Terms of Service" }
+    { name: "Terms of Service", path: "/terms" }
   ]);
 
   return (
@@ -31,7 +31,7 @@ export default function TermsPage() {
             Legal
           </span>
           <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-12">
-            Terms of Service.
+            Terms of Service
           </h1>
           
           <div className="space-y-12 text-lg text-muted-foreground leading-relaxed">

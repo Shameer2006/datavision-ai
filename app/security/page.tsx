@@ -15,7 +15,7 @@ export const metadata: Metadata = genMeta({
 export default function SecurityPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", path: "/" },
-    { name: "Security" }
+    { name: "Security & Compliance", path: "/security" }
   ]);
 
   const securityFeatures = [
@@ -54,9 +54,7 @@ export default function SecurityPage() {
             Trust & Safety
           </span>
           <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-12">
-            Your data is 
-            <br />
-            your most valuable asset.
+            Security & Compliance at DataVision AI
           </h1>
           
           <div className="text-xl text-muted-foreground mb-24 max-w-2xl leading-relaxed">

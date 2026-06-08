@@ -32,6 +32,15 @@ export function CTASection() {
               Get Started — It&apos;s Free
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
+
+            {/* Internal links with descriptive anchor text for sitelinks */}
+            <nav aria-label="Quick links" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 text-sm text-muted-foreground">
+              <Link href="/about" className="hover:text-foreground transition-colors underline underline-offset-4">About DataVision AI</Link>
+              <Link href="/security" className="hover:text-foreground transition-colors underline underline-offset-4">Security &amp; Compliance</Link>
+              <Link href="/contact" className="hover:text-foreground transition-colors underline underline-offset-4">Contact Us</Link>
+              <Link href="/privacy" className="hover:text-foreground transition-colors underline underline-offset-4">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-foreground transition-colors underline underline-offset-4">Terms of Service</Link>
+            </nav>
           </div>
         </div>
       </div>

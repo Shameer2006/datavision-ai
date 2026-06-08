@@ -15,7 +15,7 @@ export const metadata: Metadata = genMeta({
 export default function ContactPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", path: "/" },
-    { name: "Contact" }
+    { name: "Contact DataVision AI", path: "/contact" }
   ]);
 
   return (
@@ -32,9 +32,7 @@ export default function ContactPage() {
               Get in touch
             </span>
             <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-8">
-              Let&apos;s talk about 
-              <br />
-              your data.
+              Contact DataVision AI
             </h1>
             <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
               Have questions about our platform or want to see a custom demo? Our team is ready to help you transform your information into insights.

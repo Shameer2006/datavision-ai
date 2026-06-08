@@ -39,11 +39,47 @@ const faqSchema = generateFAQSchema([
 
 const breadcrumbSchema = generateBreadcrumbSchema([{ name: "Home", path: "/" }]);
 
+// SiteLinksSearchBox schema — tells Google to show a search box in sitelinks
+const siteLinksSearchBoxSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  alternateName: "DataVision AI",
+  url: siteConfig.url,
+  potentialAction: [
+    {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteConfig.url}/chat?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  ],
+};
+
+// Sitelinks navigation schema — explicitly lists key pages
+const siteNavigationSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "DataVision AI Site Navigation",
+  itemListElement: [
+    { "@type": "SiteLinksSearchBox", position: 1, url: siteConfig.url },
+    { "@type": "ListItem", position: 2, name: "About DataVision AI",    url: `${siteConfig.url}/about`    },
+    { "@type": "ListItem", position: 3, name: "Security & Compliance",  url: `${siteConfig.url}/security` },
+    { "@type": "ListItem", position: 4, name: "Contact Us",             url: `${siteConfig.url}/contact`  },
+    { "@type": "ListItem", position: 5, name: "Privacy Policy",         url: `${siteConfig.url}/privacy`  },
+    { "@type": "ListItem", position: 6, name: "Terms of Service",       url: `${siteConfig.url}/terms`    },
+  ],
+};
+
 export default function Home() {
   return (
     <>
       <StructuredData data={faqSchema} />
       <StructuredData data={breadcrumbSchema} />
+      <StructuredData data={siteLinksSearchBoxSchema} />
+      <StructuredData data={siteNavigationSchema} />
       <main className="relative min-h-screen overflow-x-hidden">
         <Navigation />
         <HeroSection />
