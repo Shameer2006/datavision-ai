@@ -166,7 +166,7 @@ export default function ChatPage() {
 
     try {
       const { data: { user: authUser } } = await supabase.auth.getUser();
-      
+
       // Credit Pre-flight Check
       if (authUser) {
         const { data: credits } = await supabase
@@ -320,7 +320,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div 
+    <div
       className="relative flex h-screen w-full overflow-hidden bg-background"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -349,8 +349,8 @@ export default function ChatPage() {
 
       {/* Main Chat Area */}
       <div className="flex flex-1 flex-col z-10 bg-background/20 backdrop-blur-[1px]">
-        <ChatHeader 
-          currentModel={currentModel} 
+        <ChatHeader
+          currentModel={currentModel}
           onModelChange={setCurrentModel}
           activeChatId={activeChat?.id}
           onSelectChat={handleSelectChat}
@@ -358,13 +358,13 @@ export default function ChatPage() {
           onDeleteChat={handleDeleteChat}
           sidebarRefreshKey={sidebarRefresh}
         />
-        
+
         <main className="flex-1 overflow-y-auto">
           <div className="h-full w-full py-4">
-            <ChatMessages 
-              messages={messages} 
-              isTyping={isTyping} 
-              onSuggest={handleSendMessage} 
+            <ChatMessages
+              messages={messages}
+              isTyping={isTyping}
+              onSuggest={handleSendMessage}
             />
           </div>
         </main>
@@ -380,9 +380,9 @@ export default function ChatPage() {
           <div className="flex flex-col items-center justify-center p-12 max-w-md mx-auto rounded-3xl border-2 border-dashed border-primary bg-card/90 shadow-2xl text-center scale-95 animate-in zoom-in-95 duration-200">
             <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 animate-bounce">
               <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="17 8 12 3 7 8"/>
-                <line x1="12" x2="12" y1="3" y2="15"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" x2="12" y1="3" y2="15" />
               </svg>
             </div>
             <h3 className="text-2xl font-bold tracking-tight mb-2">Drop your dataset here</h3>
