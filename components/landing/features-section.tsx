@@ -49,7 +49,7 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className="relative py-24 lg:py-36">
+    <section className="relative py-24 lg:py-36" aria-labelledby="features-heading">
       {/* Subtle divider gradient */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
 
@@ -61,7 +61,7 @@ export function FeaturesSection() {
             Features
             <span className="w-8 h-px bg-foreground/30" />
           </span>
-          <h2 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6">
+          <h2 id="features-heading" className="text-4xl lg:text-5xl font-bold tracking-tight mb-6">
             Everything you need to{" "}
             <span className="bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">
               understand your data
@@ -74,15 +74,15 @@ export function FeaturesSection() {
         </div>
 
         {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {features.map((feature, i) => {
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 list-none p-0">
+          {features.map((feature) => {
             const Icon = feature.icon;
             return (
-              <div
+              <li
                 key={feature.title}
                 className="group relative p-8 rounded-2xl border border-foreground/5 bg-foreground/[0.02] hover:bg-foreground/[0.04] transition-all duration-500 hover:border-foreground/10 hover:-translate-y-1 hover:shadow-lg hover:shadow-foreground/[0.03]"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-foreground/5 text-foreground mb-6 transition-transform duration-500 group-hover:scale-110">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-foreground/5 text-foreground mb-6 transition-transform duration-500 group-hover:scale-110" aria-hidden="true">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-lg font-semibold mb-3 text-foreground">
@@ -91,10 +91,10 @@ export function FeaturesSection() {
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {feature.description}
                 </p>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </section>
   );

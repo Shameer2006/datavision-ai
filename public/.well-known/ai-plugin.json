@@ -1,0 +1,15 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "DataVision AI",
+  "name_for_model": "datavision_ai",
+  "description_for_human": "AI-powered data analytics platform. Upload CSV or Excel files and get instant interactive charts using plain English — no coding required.",
+  "description_for_model": "DataVision AI lets users upload CSV or Excel datasets and generate interactive Plotly charts by asking questions in natural language. Powered by Google Gemini AI. Free tier includes 1000 credits. Supports API key integration for developers.",
+  "auth": { "type": "none" },
+  "api": {
+    "type": "openapi",
+    "url": "https://datavision-ai.vercel.app/openapi.json"
+  },
+  "logo_url": "https://datavision-ai.vercel.app/icon.png",
+  "contact_email": "hello@datavision.ai",
+  "legal_info_url": "https://datavision-ai.vercel.app/terms"
+}

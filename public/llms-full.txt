@@ -1,0 +1,66 @@
+# DataVision AI — Full Reference
+
+## Product Summary
+
+DataVision AI is a web-based, AI-powered data analytics platform that transforms raw spreadsheet data into interactive visual insights through natural language conversation. It is designed to make data analysis accessible to non-technical users while offering API access for developers.
+
+## Core Use Cases
+
+1. **Business Reporting**: Upload a sales CSV, ask "What are the top 5 products by revenue?", get an instant bar chart.
+2. **Trend Analysis**: Ask "Show me monthly growth rate over the last year" and receive a line chart with AI commentary.
+3. **Data Exploration**: Upload any dataset and ask open-ended questions to discover patterns and anomalies.
+4. **Developer Integration**: Use the DataVision API to embed AI-powered chart generation in your own applications.
+
+## How It Works
+
+1. User signs in with Google (via Supabase OAuth)
+2. User uploads a CSV or Excel file by drag-and-drop or file picker
+3. User types a question in plain English in the chat interface
+4. Google Gemini AI analyzes the dataset schema and the question
+5. The backend (Python/FastAPI) generates a Plotly chart configuration
+6. The frontend renders a fully interactive chart with a text summary
+
+## Frequently Asked Questions
+
+**Is DataVision AI free?**
+Yes. New users receive 1,000 free analysis credits on sign-up. No credit card required.
+
+**What file formats are supported?**
+CSV (.csv), Excel (.xls), and Excel (.xlsx) files.
+
+**Is my data private?**
+Yes. DataVision AI uses metadata-only processing. Raw data rows are processed transiently and never permanently stored on any server.
+
+**Do I need to know SQL or Python?**
+No. DataVision AI is designed for non-technical users. You interact entirely through natural language.
+
+**Can I use DataVision AI in my own application?**
+Yes. Users can generate a DataVision API key from their account settings and use it to call the DataVision API endpoints for chart generation and data analysis.
+
+**What AI model powers DataVision?**
+Google Gemini via the official Google Generative AI SDK.
+
+## Security & Compliance
+
+- TLS 1.3 encryption in transit
+- AES-256 encryption at rest
+- Zero-knowledge row access (AI only sees schema metadata)
+- SOC2, GDPR, and HIPAA-aligned practices
+- Row-Level Security (RLS) on all Supabase database tables
+- API keys stored as hashes, shown only once at generation
+
+## API Reference (Brief)
+
+Base URL: https://api.datavision.ai/v1
+
+POST /analyze
+- Header: Authorization: Bearer YOUR_API_KEY
+- Body: { "query": "string", "dataset": "base64_encoded_csv" }
+- Response: { "chart": plotly_config, "summary": "string" }
+
+## Company
+
+- Name: DataVision AI
+- Founded: 2024
+- Contact: hello@datavision.ai
+- Website: https://datavision-ai.vercel.app

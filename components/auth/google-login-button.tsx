@@ -21,7 +21,7 @@ export function GoogleLoginButton() {
     <button
       onClick={handleLogin}
       disabled={loading}
-      className="w-full flex items-center justify-center gap-3 h-11 px-6 rounded-xl border border-border/60 bg-background hover:bg-accent text-sm font-medium transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+      className="w-full flex items-center justify-center gap-3 h-12 px-6 rounded-xl border border-border/60 bg-background hover:bg-accent/50 hover:shadow-sm text-sm font-medium transition-all disabled:opacity-60 disabled:cursor-not-allowed"
     >
       {loading ? (
         <span className="h-4 w-4 rounded-full border-2 border-foreground/20 border-t-foreground animate-spin" />

@@ -1,17 +1,19 @@
 {
   "name": "DataVision AI",
   "short_name": "DataVision",
-  "description": "AI-powered data analytics and visualization platform. Transform your data into beautiful, interactive charts and insights with natural language.",
+  "description": "AI-powered data analytics platform. Upload CSV or Excel files, ask questions in plain English, and get instant interactive charts — no coding required.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#1a1a1a",
-  "theme_color": "#1a1a1a",
+  "background_color": "#0f0f0f",
+  "theme_color": "#0f0f0f",
+  "orientation": "portrait-primary",
+  "lang": "en",
   "icons": [
-    {
-      "src": "/icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "/icon.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
-  "categories": ["business", "productivity", "utilities"]
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [],
+  "prefer_related_applications": false
 }

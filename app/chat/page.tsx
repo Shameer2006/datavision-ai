@@ -16,6 +16,7 @@ import {
   getAllConversations,
   type Conversation,
 } from "@/lib/chat-store";
+import { createClient } from "@/lib/supabase/client";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
@@ -28,6 +29,7 @@ export default function ChatPage() {
   const [cachedSchema, setCachedSchema] = React.useState<string>("");
   const [cachedDfJson, setCachedDfJson] = React.useState<string>("");
   const [isDragging, setIsDragging] = React.useState(false);
+  const supabase = createClient();
 
   // bumped whenever sidebar needs re-reading
   const [sidebarRefresh, setSidebarRefresh] = React.useState(0);
@@ -163,6 +165,38 @@ export default function ChatPage() {
     refreshSidebar();
 
     try {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      
+      // Credit Pre-flight Check
+      if (authUser) {
+        const { data: credits } = await supabase
+          .from("credits")
+          .select("balance, total_used")
+          .eq("user_id", authUser.id)
+          .single();
+
+        if (credits && credits.balance <= 0) {
+          const outOfCreditsMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            role: "assistant",
+            content: "You have run out of credits. Please upgrade your plan or generate a new API key to continue using DataVision AI.",
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          };
+
+          const originConv = getConversation(originChatId);
+          if (originConv) {
+            originConv.messages = [...originConv.messages, outOfCreditsMessage];
+            saveConversation(originConv);
+            refreshSidebar();
+          }
+
+          if (activeChatRef.current === originChatId) {
+            setMessages((prev) => [...prev, outOfCreditsMessage]);
+          }
+          setIsTyping(false);
+          return;
+        }
+      }
       const formData = new FormData();
       formData.append("message", content);
       if (file) {
@@ -211,6 +245,25 @@ export default function ChatPage() {
           setCachedDfJson(data.cached_df_json || "");
         }
         setMessages((prev) => [...prev, aiResponse]);
+      }
+
+      // Deduct credit upon successful response
+      if (authUser) {
+        const { data: credits } = await supabase
+          .from("credits")
+          .select("balance, total_used")
+          .eq("user_id", authUser.id)
+          .single();
+
+        if (credits) {
+          await supabase
+            .from("credits")
+            .update({
+              balance: Math.max(0, credits.balance - 1),
+              total_used: credits.total_used + 1,
+            })
+            .eq("user_id", authUser.id);
+        }
       }
     } catch (error) {
       const errorMessage: Message = {

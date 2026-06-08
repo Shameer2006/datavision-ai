@@ -64,18 +64,21 @@ export function HeroSection() {
         </div>
 
         {/* Floating Feature Chips */}
-        <div className="animate-fade-in-up animation-delay-500 flex flex-wrap items-center justify-center gap-3 mt-16 text-sm text-muted-foreground">
+        <div
+          className="animate-fade-in-up animation-delay-500 flex flex-wrap items-center justify-center gap-3 mt-16 text-sm text-muted-foreground"
+          aria-label="Key features"
+        >
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 border border-foreground/5">
-            <Upload className="h-3.5 w-3.5" />
-            CSV & Excel Support
+            <Upload className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>CSV & Excel Support</span>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 border border-foreground/5">
-            <BarChart3 className="h-3.5 w-3.5" />
-            Interactive Charts
+            <BarChart3 className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Interactive Charts</span>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 border border-foreground/5">
-            <Sparkles className="h-3.5 w-3.5" />
-            Natural Language AI
+            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Natural Language AI</span>
           </div>
         </div>
       </div>

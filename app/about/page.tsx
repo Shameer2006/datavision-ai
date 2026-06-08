@@ -5,10 +5,10 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "About DataVision AI - Our Mission to Democratize Data Analytics",
-  description: "DataVision AI was founded in 2024 to make data analytics accessible to everyone. Learn how we use AI to turn complex data into instant, beautiful visualizations.",
+  title: "About DataVision AI — Our Mission to Democratize Data Analytics",
+  description: "DataVision AI was built to make data analytics accessible to everyone. Learn how we use Google Gemini AI to turn complex datasets into instant, beautiful visualizations — no coding required.",
   path: "/about",
-  keywords: ["about DataVision AI", "AI data analytics company", "data visualization startup", "AI business intelligence mission", "data democratization"]
+  keywords: ["about DataVision AI", "AI data analytics company", "data visualization startup", "democratize data analytics", "AI business intelligence", "no-code analytics platform"]
 });
 
 export default function AboutPage() {

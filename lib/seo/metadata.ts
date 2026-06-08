@@ -7,6 +7,8 @@ interface MetadataProps {
   path: string;
   keywords?: string[];
   noIndex?: boolean;
+  ogImage?: string;
+  type?: "website" | "article";
 }
 
 export function generateMetadata({
@@ -15,48 +17,51 @@ export function generateMetadata({
   path,
   keywords = [],
   noIndex = false,
+  ogImage,
+  type = "website",
 }: MetadataProps): Metadata {
   const url = `${siteConfig.url}${path}`;
   const allKeywords = [...siteConfig.keywords, ...keywords];
+  const image = ogImage ?? siteConfig.ogImage;
+  const fullTitle = `${title} | ${siteConfig.name}`;
 
   return {
-    title: `${title} | ${siteConfig.name}`,
+    title: fullTitle,
     description,
     keywords: allKeywords,
     authors: siteConfig.authors,
     creator: siteConfig.creator,
     metadataBase: new URL(siteConfig.url),
-    alternates: {
-      canonical: url,
-    },
+    alternates: { canonical: url },
     openGraph: {
-      type: "website",
+      type,
       locale: "en_US",
       url,
-      title,
+      title: fullTitle,
       description,
       siteName: siteConfig.name,
-      images: [
-        {
-          url: siteConfig.ogImage,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
+      images: [{ url: image, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: fullTitle,
       description,
-      images: [siteConfig.ogImage],
+      images: [image],
       creator: "@datavisionai",
+      site: "@datavisionai",
     },
-    ...(noIndex && {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }),
+    robots: noIndex
+      ? { index: false, follow: false }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+          },
+        },
   };
 }

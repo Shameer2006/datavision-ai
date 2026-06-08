@@ -1,0 +1,49 @@
+# DataVision AI
+
+> DataVision AI is a free, AI-powered data analytics and visualization platform. Users upload CSV or Excel files, ask questions in plain English, and instantly receive interactive charts and data insights — no coding required.
+
+## What DataVision AI Does
+
+- Upload CSV, XLS, or XLSX datasets directly into a chat interface
+- Ask natural language questions like "Show me sales trends by month" or "Which category has the highest revenue?"
+- Get instant, interactive Plotly charts and AI-generated data summaries
+- Supports multiple simultaneous conversations, each with its own dataset context
+- Powered by Google Gemini AI for data analysis and chart generation
+
+## Who It's For
+
+- Business analysts who need quick insights without SQL
+- Researchers who want to visualize experimental data
+- Students exploring datasets for academic projects
+- Non-technical teams who work with spreadsheets
+- Developers who want to integrate AI analytics via API
+
+## Key Features
+
+- **Natural Language Queries**: No SQL or formulas needed
+- **Interactive Charts**: Zoom, pan, hover on all generated visualizations
+- **CSV & Excel Support**: Drag and drop any spreadsheet file
+- **Multi-Conversation**: Manage multiple datasets simultaneously
+- **API Access**: Generate API keys to integrate DataVision into your own projects
+- **Secure**: Data processed locally, raw rows never stored on servers
+- **Free Tier**: 1,000 analysis credits on sign-up
+
+## Technology
+
+- Frontend: Next.js 16, React 19, Tailwind CSS
+- AI Engine: Google Gemini (via backend)
+- Auth: Supabase + Google OAuth
+- Charts: Plotly.js (fully interactive)
+- Backend: Python (FastAPI)
+
+## Pricing
+
+Free tier available with 1,000 credits. No credit card required to sign up.
+
+## Links
+
+- Homepage: https://datavision-ai.vercel.app
+- App: https://datavision-ai.vercel.app/chat
+- About: https://datavision-ai.vercel.app/about
+- Security: https://datavision-ai.vercel.app/security
+- Contact: hello@datavision.ai
