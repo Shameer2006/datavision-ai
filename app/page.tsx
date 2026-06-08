@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Navigation } from "@/components/landing/navigation";
 import { HeroSection } from "@/components/landing/hero-section";
 import { FeaturesSection } from "@/components/landing/features-section";
+import { PricingSection } from "@/components/landing/pricing-section";
 import { CTASection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
 import { StructuredData, generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
@@ -47,6 +48,7 @@ export default function Home() {
         <Navigation />
         <HeroSection />
         <FeaturesSection />
+        <PricingSection />
         <CTASection />
         <FooterSection />
       </main>
