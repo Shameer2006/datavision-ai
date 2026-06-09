@@ -6,6 +6,7 @@ import { ChatHeader } from "@/components/chat/chat-header";
 import { ChatMessages } from "@/components/chat/chat-messages";
 import { ChatInput } from "@/components/chat/chat-input";
 import { Message } from "@/components/chat/message-bubble";
+import { BackendWaker } from "@/components/chat/backend-waker";
 import { createConversation,
   getConversation,
   saveConversation,
@@ -316,7 +317,8 @@ export default function ChatPage() {
         </div>
       </div>
 
-      {/* Stunning Translucent Drag-and-Drop Glass Overlay */}
+      <BackendWaker />
+
       {isDragging && (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-background/60 backdrop-blur-md transition-all duration-300">
           <div className="flex flex-col items-center justify-center p-12 max-w-md mx-auto rounded-3xl border-2 border-dashed border-primary bg-card/90 shadow-2xl text-center scale-95 animate-in zoom-in-95 duration-200">
