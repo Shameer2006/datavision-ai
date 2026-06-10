@@ -126,13 +126,23 @@ export function Navigation() {
             </Link>
           ))}
           <div className="pt-2">
-            <Link
-              href="/chat"
-              onClick={() => setIsOpen(false)}
-              className="block w-full text-center px-4 py-3 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors"
-            >
-              Open App
-            </Link>
+            {user ? (
+              <Link
+                href="/chat"
+                onClick={() => setIsOpen(false)}
+                className="block w-full text-center px-4 py-3 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors"
+              >
+                Open App
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setIsOpen(false)}
+                className="block w-full text-center px-4 py-3 text-sm font-medium bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       </div>

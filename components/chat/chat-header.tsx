@@ -33,11 +33,12 @@ export function ChatHeader({
   sidebarRefreshKey,
 }: ChatHeaderProps) {
   const { setTheme, theme } = useTheme();
+  const [open, setOpen] = React.useState(false);
 
   return (
     <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b bg-background/80 px-4 backdrop-blur-md">
       <div className="flex items-center gap-2">
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             render={
               <Button variant="ghost" size="icon" className="md:hidden" />
@@ -49,8 +50,14 @@ export function ChatHeader({
           <SheetContent side="left" className="w-[260px] p-0">
             <ChatSidebar
               activeChatId={activeChatId}
-              onSelectChat={onSelectChat}
-              onNewChat={onNewChat}
+              onSelectChat={(id) => {
+                onSelectChat?.(id);
+                setOpen(false);
+              }}
+              onNewChat={() => {
+                onNewChat?.();
+                setOpen(false);
+              }}
               onDeleteChat={onDeleteChat}
               refreshKey={sidebarRefreshKey}
             />

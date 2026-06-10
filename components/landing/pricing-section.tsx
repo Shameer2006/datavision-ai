@@ -10,7 +10,7 @@ const tiers = [
     price: "$0",
     description: "Perfect for exploring DataVision AI.",
     features: [
-      "1,000 Analysis Credits",
+      "100 Analysis Credits",
       "Basic charts & graphs",
       "CSV & Excel support",
       "Community support",

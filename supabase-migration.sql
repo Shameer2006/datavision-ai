@@ -4,7 +4,7 @@
 create table if not exists public.plans (
   id                     text primary key,
   name                   text not null,
-  credits                int  not null default 1000,
+  credits                int  not null default 100,
   price_usd              int  not null default 0,
   rate_limit_per_minute  int  not null default 10,
   rate_limit_per_day     int  not null default 100,
@@ -13,7 +13,7 @@ create table if not exists public.plans (
 
 insert into public.plans (id, name, credits, price_usd, rate_limit_per_minute, rate_limit_per_day, max_api_keys)
 values
-  ('free',       'Free',       1000,  0,  10,  100,  1),
+  ('free',       'Free',       100,  0,  10,  100,  1),
   ('pro',        'Pro',        10000, 9,  60,  1000, 5),
   ('enterprise', 'Enterprise', 99999, 29, 300, 9999, 20)
 on conflict (id) do nothing;
@@ -68,7 +68,7 @@ begin
   on conflict (id) do nothing;
 
   insert into public.credits (user_id, balance, total_used, resets_at)
-  values (new.id, 1000, 0, now() + interval '30 days')
+  values (new.id, 100, 0, now() + interval '30 days')
   on conflict (user_id) do nothing;
 
   insert into public.user_plans (user_id, plan_id, started_at, resets_at)

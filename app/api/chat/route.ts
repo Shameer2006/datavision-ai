@@ -1,34 +1,43 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 import { deductCredits, CREDIT_COSTS } from "@/lib/credits";
 import { validateApiKey } from "@/lib/api-key-validator";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
-export async function POST(request: Request) {
-  let userId: string | null = null;
-  let apiKeyId: string | undefined = undefined;
-
-  // 1. Check for API Key in Authorization header
-  const authHeader = request.headers.get("Authorization");
-  if (authHeader && authHeader.startsWith("Bearer dv_live_")) {
-    const rawKey = authHeader.replace("Bearer ", "").trim();
-    const validatedKey = await validateApiKey(rawKey);
-    
-    if (!validatedKey) {
-      return NextResponse.json({ error: "Invalid or expired API Key" }, { status: 401 });
-    }
-    
-    userId = validatedKey.userId;
-    apiKeyId = validatedKey.id;
-  } else {
-    // 2. Fallback to Supabase Session Cookie Auth
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      userId = user.id;
-    }
+async function getUserIdFromRequest(request: Request): Promise<{ userId: string | null; apiKeyId?: string }> {
+  // 1. Check Bearer token (API key auth)
+  const authHeader = request.headers.get("Authorization") ?? "";
+  if (authHeader.startsWith("Bearer dv_live_")) {
+    const raw = authHeader.replace("Bearer ", "").trim();
+    const validated = await validateApiKey(raw);
+    if (validated) return { userId: validated.userId, apiKeyId: validated.id };
+    return { userId: null };
   }
+
+  // 2. Session cookie auth — getSession() reads from cookie, no network call
+  try {
+    const cookieStore = await cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll: () => cookieStore.getAll(),
+          setAll: () => {},
+        },
+      }
+    );
+    const { data: { session } } = await supabase.auth.getSession();
+    return { userId: session?.user?.id ?? null };
+  } catch {
+    return { userId: null };
+  }
+}
+
+export async function POST(request: Request) {
+  const { userId, apiKeyId } = await getUserIdFromRequest(request);
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -40,7 +49,7 @@ export async function POST(request: Request) {
   const action = hasFile ? "chat_with_file" as const : "chat_followup" as const;
   const cost = CREDIT_COSTS[action];
 
-  // Atomic credit deduction + rate limit check via Supabase RPC
+  // Atomic credit deduction + rate limit check
   const result = await deductCredits(userId, action, apiKeyId);
 
   if (!result.ok) {
@@ -53,29 +62,43 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: messages[result.error!] ?? "Request denied" }, { status });
   }
 
+  // Rebuild FormData for backend (re-read file bytes to avoid 0-byte issues)
+  const backendFormData = new FormData();
+  backendFormData.append("message", (formData.get("message") as string) || "");
+
+  if (file && hasFile) {
+    const buf = await file.arrayBuffer();
+    backendFormData.append("file", new Blob([buf], { type: file.type || "text/csv" }), file.name);
+  } else {
+    const cachedSchema = (formData.get("cached_schema") as string) || "";
+    const cachedDfJson = (formData.get("cached_df_json") as string) || "";
+    if (cachedSchema) {
+      backendFormData.append("cached_schema", cachedSchema);
+      backendFormData.append("cached_df_json", cachedDfJson);
+    }
+  }
+
   // Forward to Python backend
   try {
     const backendRes = await fetch(`${BACKEND_URL}/api/chat`, {
       method: "POST",
-      body: formData,
+      body: backendFormData,
+      signal: AbortSignal.timeout(60000),
     });
 
     const data = await backendRes.json();
 
     if (!backendRes.ok) {
-      // Refund credits if backend failed
-      const supabase = await createClient();
-      await supabase.rpc("deduct_credits", {
-        p_user_id:     userId,
-        p_amount:      -cost, // negative = refund
-        p_action_type: action, // Used original action to prevent enum mismatch
-        p_api_key_id:  apiKeyId ?? null,
-      });
+      // Refund on backend error — best effort, don't await
+      deductCredits(userId, action === "chat_with_file" ? "chat_followup" : "chat_with_file").catch(() => {});
       return NextResponse.json({ error: data.detail || "Backend error" }, { status: backendRes.status });
     }
 
     return NextResponse.json({ ...data, creditsRemaining: result.balance });
-  } catch {
-    return NextResponse.json({ error: "Backend unavailable. Please try again." }, { status: 503 });
+  } catch (err) {
+    const msg = err instanceof Error && err.name === "TimeoutError"
+      ? "The request timed out. The AI engine may be warming up — please try again."
+      : "Backend unavailable. Please try again in a moment.";
+    return NextResponse.json({ error: msg }, { status: 503 });
   }
 }

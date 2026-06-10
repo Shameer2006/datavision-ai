@@ -33,7 +33,7 @@ const faqSchema = generateFAQSchema([
   },
   {
     question: "Is DataVision AI free to use?",
-    answer: "Yes, DataVision AI offers a free tier with 1,000 analysis credits on sign-up.",
+    answer: "Yes, DataVision AI offers a free tier with 100 analysis credits on sign-up.",
   },
 ]);
 

@@ -30,7 +30,7 @@ const faqItems = [
   },
   {
     question: "Is DataVision AI free to use?",
-    answer: "Yes, DataVision AI offers a free tier with 1,000 analysis credits on sign-up.",
+    answer: "Yes, DataVision AI offers a free tier with 100 analysis credits on sign-up.",
   },
 ];
 
@@ -56,7 +56,7 @@ export default function FAQPage() {
           </span>
           <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-16">
             Frequently Asked
-            <br />
+            <br className="hidden md:inline" />
             Questions.
           </h1>
           

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { CopyIcon, CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PlotlyChart } from "./plotly-chart";
+import Image from "next/image";
 
 export interface Message {
   id: string;
@@ -41,18 +42,28 @@ export function MessageBubble({ message, isLast }: MessageBubbleProps) {
     >
       <div
         className={cn(
-          "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold",
+          "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold overflow-hidden border",
           isUser
-            ? "bg-primary text-primary-foreground"
-            : "bg-chart-2 text-primary-foreground"
+            ? "bg-primary text-primary-foreground border-transparent"
+            : "bg-transparent border-border/50"
         )}
       >
-        {isUser ? "U" : "DV"}
+        {isUser ? (
+          "U"
+        ) : (
+          <Image
+            src="/icon.png"
+            alt="DataVision AI Logo"
+            width={32}
+            height={32}
+            className="object-cover h-full w-full"
+          />
+        )}
       </div>
 
       <div
         className={cn(
-          "flex max-w-[85%] flex-col gap-2",
+          "flex max-w-[92%] sm:max-w-[85%] flex-col gap-2",
           isUser ? "items-end" : "items-start"
         )}
       >

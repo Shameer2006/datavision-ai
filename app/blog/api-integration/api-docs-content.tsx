@@ -182,15 +182,15 @@ function ParamRow({
 }) {
   return (
     <tr className="border-b border-foreground/5 last:border-0 group">
-      <td className="py-3.5 pr-4">
+      <td className="py-3.5 px-4">
         <code className="text-sm font-mono text-foreground bg-foreground/5 px-2 py-0.5 rounded-md">
           {name}
         </code>
       </td>
-      <td className="py-3.5 pr-4">
+      <td className="py-3.5 px-4">
         <span className="text-xs font-mono text-muted-foreground/70">{type}</span>
       </td>
-      <td className="py-3.5 pr-4">
+      <td className="py-3.5 px-4">
         {required ? (
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/15">
             Required
@@ -201,7 +201,7 @@ function ParamRow({
           </span>
         )}
       </td>
-      <td className="py-3.5 text-sm text-muted-foreground">{description}</td>
+      <td className="py-3.5 px-4 text-sm text-muted-foreground">{description}</td>
     </tr>
   );
 }
@@ -634,7 +634,7 @@ export function ApiDocsContent() {
                 Credits & Rate Limits
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Each API request consumes credits from your account balance. New accounts start with 1,000 free credits.
+                Each API request consumes credits from your account balance. New accounts start with 100 free credits.
               </p>
 
               {/* Credit cards */}

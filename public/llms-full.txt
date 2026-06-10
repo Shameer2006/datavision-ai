@@ -23,7 +23,7 @@ DataVision AI is a web-based, AI-powered data analytics platform that transforms
 ## Frequently Asked Questions
 
 **Is DataVision AI free?**
-Yes. New users receive 1,000 free analysis credits on sign-up. No credit card required.
+Yes. New users receive 100 free analysis credits on sign-up. No credit card required.
 
 **What file formats are supported?**
 CSV (.csv), Excel (.xls), and Excel (.xlsx) files.

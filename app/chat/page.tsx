@@ -264,7 +264,7 @@ export default function ChatPage() {
 
   return (
     <div
-      className="relative flex h-screen w-full overflow-hidden bg-background"
+      className="relative flex h-dvh w-full overflow-hidden bg-background"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
