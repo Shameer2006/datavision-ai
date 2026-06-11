@@ -9,9 +9,10 @@ import { StructuredData, generateBreadcrumbSchema, generateFAQSchema } from "@/l
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — AI Data Analytics & Visualization Platform`,
-  description: "Upload CSV or Excel files and instantly transform your data into interactive charts using plain English. No coding required. Powered by Google Gemini AI.",
+  title: `${siteConfig.name} — Free AI Data Analytics & CSV Visualization Tool`,
+  description: "Free AI-powered data analytics tool. Upload any CSV or Excel file, ask questions in plain English, and get instant interactive charts in seconds. No coding or SQL required.",
   alternates: { canonical: siteConfig.url },
+  keywords: siteConfig.keywords,
 };
 
 const faqSchema = generateFAQSchema([
@@ -33,7 +34,7 @@ const faqSchema = generateFAQSchema([
   },
   {
     question: "Is DataVision AI free to use?",
-    answer: "Yes, DataVision AI offers a free tier with 100 analysis credits on sign-up.",
+    answer: "Yes, DataVision AI offers a free tier with 1,000 analysis credits every month — enough for dozens of analyses.",
   },
 ]);
 

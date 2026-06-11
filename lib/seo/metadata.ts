@@ -9,6 +9,8 @@ interface MetadataProps {
   noIndex?: boolean;
   ogImage?: string;
   type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
 export function generateMetadata({
@@ -19,6 +21,8 @@ export function generateMetadata({
   noIndex = false,
   ogImage,
   type = "website",
+  publishedTime,
+  modifiedTime,
 }: MetadataProps): Metadata {
   const url = `${siteConfig.url}${path}`;
   const allKeywords = [...siteConfig.keywords, ...keywords];
@@ -41,6 +45,11 @@ export function generateMetadata({
       description,
       siteName: siteConfig.name,
       images: [{ url: image, width: 1200, height: 630, alt: title }],
+      ...(type === "article" && {
+        publishedTime,
+        modifiedTime,
+        authors: [siteConfig.url],
+      }),
     },
     twitter: {
       card: "summary_large_image",

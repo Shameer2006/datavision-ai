@@ -3,12 +3,12 @@ import Image from "next/image";
 
 const footerLinks = {
   product: [
-    { href: "/chat", label: "Open App" },
-    { href: "/about", label: "About" },
-    { href: "/blog/api-integration", label: "API Docs" },
-    { href: "/faq", label: "FAQ" },
-    { href: "/security", label: "Security" },
-    { href: "/contact", label: "Contact" },
+    { href: "/chat",     label: "Open DataVision App" },
+    { href: "/about",    label: "About DataVision AI" },
+    { href: "/blog",     label: "Blog & Tutorials" },
+    { href: "/faq",      label: "FAQ" },
+    { href: "/security", label: "Security & Compliance" },
+    { href: "/contact",  label: "Contact Us" },
   ],
   legal: [
     { href: "/terms",   label: "Terms of Service" },

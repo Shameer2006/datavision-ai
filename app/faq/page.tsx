@@ -3,72 +3,209 @@ import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 import { generateBreadcrumbSchema, generateFAQSchema, StructuredData } from "@/lib/seo/structured-data";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
+import Link from "next/link";
 
 export const metadata: Metadata = genMeta({
-  title: "Frequently Asked Questions — DataVision AI",
-  description: "Find answers to common questions about DataVision AI, pricing, security, and how our AI-powered data analytics platform works.",
+  title: "FAQ — Frequently Asked Questions About DataVision AI",
+  description: "Find answers to common questions about DataVision AI — how it works, pricing, supported file formats, data security, API access, and how to analyze your data without coding.",
   path: "/faq",
-  keywords: ["DataVision AI FAQ", "help center", "frequently asked questions", "AI analytics support"]
+  keywords: [
+    "DataVision AI FAQ",
+    "how to analyze CSV with AI",
+    "free data analytics tool questions",
+    "AI chart generator help",
+    "data visualization tool guide",
+    "how to use DataVision AI",
+    "CSV to chart free",
+    "no code data analysis help",
+  ],
 });
 
-const faqItems = [
+const faqCategories = [
   {
-    question: "What is DataVision AI?",
-    answer: "DataVision AI is an AI-powered data analytics platform that lets you upload CSV or Excel files and get instant interactive visualizations by asking questions in plain English.",
+    category: "Getting Started",
+    items: [
+      {
+        question: "What is DataVision AI?",
+        answer: "DataVision AI is a free AI-powered data analytics platform. You upload a CSV or Excel file, ask questions in plain English like \"show me monthly sales trends\", and instantly get beautiful interactive charts — no coding, SQL, or data science knowledge needed.",
+      },
+      {
+        question: "Do I need coding or SQL skills to use DataVision AI?",
+        answer: "No. DataVision AI is designed for non-technical users. You simply upload your spreadsheet and type your question in plain English. The AI handles all the data processing and chart generation automatically.",
+      },
+      {
+        question: "How do I get started with DataVision AI?",
+        answer: "Sign in with your Google account at datavision-ai.vercel.app, upload any CSV or Excel file by dragging it into the chat, then type a question about your data. You'll get an interactive chart within seconds.",
+      },
+      {
+        question: "Is DataVision AI free to use?",
+        answer: "Yes. DataVision AI has a free tier that gives you 1,000 analysis credits on sign-up — no credit card required. Each chat message uses 4–8 credits depending on whether a new file is uploaded.",
+      },
+    ],
   },
   {
-    question: "Do I need coding skills to use DataVision AI?",
-    answer: "No. DataVision AI is designed for everyone. You simply upload your dataset and type questions like \"Show me sales by month\" to get instant charts.",
+    category: "Files & Data",
+    items: [
+      {
+        question: "What file formats does DataVision AI support?",
+        answer: "DataVision AI supports CSV (.csv), Excel (.xls), and Excel (.xlsx) file formats. You can drag and drop files directly into the chat or use the file picker.",
+      },
+      {
+        question: "What is the maximum file size I can upload?",
+        answer: "The maximum file size is 50 MB. For best performance, we recommend keeping files under 10 MB. Very large datasets are automatically sampled for analysis.",
+      },
+      {
+        question: "Can I analyze multiple datasets at the same time?",
+        answer: "Yes. DataVision AI supports multiple simultaneous conversation threads, each with its own dataset context. You can switch between them from the sidebar.",
+      },
+      {
+        question: "What kinds of questions can I ask about my data?",
+        answer: "You can ask anything — \"Show me top 10 products by revenue\", \"What is the monthly trend?\", \"Which region has the lowest sales?\", \"Show a correlation between price and quantity\", \"Compare Q1 vs Q2 performance\". The AI understands natural language questions about your specific dataset.",
+      },
+    ],
   },
   {
-    question: "What file formats does DataVision AI support?",
-    answer: "DataVision AI supports CSV, XLS, and XLSX file formats.",
+    category: "Charts & Visualizations",
+    items: [
+      {
+        question: "What types of charts does DataVision AI generate?",
+        answer: "DataVision AI generates bar charts, line charts, scatter plots, pie charts, histograms, heatmaps, box plots, and more — automatically chosen based on your data and question. All charts are interactive powered by Plotly.js.",
+      },
+      {
+        question: "Can I zoom, pan, or interact with the charts?",
+        answer: "Yes. Every chart generated by DataVision AI is fully interactive. You can zoom in, pan, hover to see exact values, click to isolate data series, and download the chart as a PNG image.",
+      },
+      {
+        question: "Can I download or export the charts?",
+        answer: "Yes. You can download any chart as a PNG image directly from the chart toolbar. You can also export your entire conversation history as a JSON file from Account Settings.",
+      },
+    ],
   },
   {
-    question: "Is my data safe with DataVision AI?",
-    answer: "Yes. Your data is processed locally and securely. We use metadata-only processing and your raw data never leaves your control.",
+    category: "Security & Privacy",
+    items: [
+      {
+        question: "Is my data safe with DataVision AI?",
+        answer: "Yes. DataVision AI processes your data transiently — it is never permanently stored on our servers. We use TLS 1.3 encryption in transit and AES-256 at rest. Your raw data rows are never stored after the analysis session ends.",
+      },
+      {
+        question: "Does DataVision AI store my uploaded files?",
+        answer: "No. Uploaded files are processed in memory to extract schema and sample data, then discarded. We never permanently store your raw spreadsheet data on any server.",
+      },
+      {
+        question: "Is DataVision AI GDPR compliant?",
+        answer: "Yes. DataVision AI is built with GDPR, HIPAA, and SOC2-aligned practices. We collect only the minimum data necessary and you can request deletion of your account and all associated data at any time.",
+      },
+    ],
   },
   {
-    question: "Is DataVision AI free to use?",
-    answer: "Yes, DataVision AI offers a free tier with 100 analysis credits on sign-up.",
+    category: "API & Developer",
+    items: [
+      {
+        question: "Can I use DataVision AI in my own application?",
+        answer: "Yes. You can generate a DataVision API key from your Account Settings page and use it to call the DataVision API endpoints to embed AI-powered chart generation and data analysis into your own projects.",
+      },
+      {
+        question: "How many API keys can I create?",
+        answer: "Free tier users can create 1 API key. Pro plan users can create up to 5 keys, and Enterprise users up to 20 keys. API keys can be revoked and regenerated at any time from Account Settings.",
+      },
+      {
+        question: "What are the API rate limits?",
+        answer: "Free tier: 10 requests per minute, 100 per day. Pro tier: 60 requests per minute, 1,000 per day. Enterprise tier: 300 requests per minute, 9,999 per day. Credits are shared between dashboard and API usage.",
+      },
+    ],
+  },
+  {
+    category: "Credits & Plans",
+    items: [
+      {
+        question: "How do credits work?",
+        answer: "Each AI analysis request costs credits. Uploading a new file costs 8 credits, follow-up messages cost 4 credits, API /analyze calls cost 6 credits, and API /chart calls cost 4 credits. Free tier includes 1,000 credits that reset monthly.",
+      },
+      {
+        question: "When do my credits reset?",
+        answer: "Credits reset every 30 days from your sign-up date. You can see your reset date in Account Settings under the Credits section.",
+      },
+      {
+        question: "What happens when I run out of credits?",
+        answer: "When your credits reach zero, you'll see a message in the chat letting you know. Your conversation history and uploaded data context are preserved. Credits will be restored automatically on your next monthly reset date.",
+      },
+    ],
   },
 ];
+
+// Flatten all FAQ items for schema
+const allFaqItems = faqCategories.flatMap(c => c.items);
 
 export default function FAQPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", path: "/" },
-    { name: "FAQ" }
+    { name: "FAQ", path: "/faq" },
   ]);
-  
-  const faqSchema = generateFAQSchema(faqItems);
+  const faqSchema = generateFAQSchema(allFaqItems);
 
   return (
     <>
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={faqSchema} />
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <main className="relative min-h-screen overflow-x-hidden">
         <Navigation />
-      
-        <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[800px] mx-auto">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
-            <span className="w-8 h-px bg-foreground/30" />
-            Support
-          </span>
-          <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-16">
-            Frequently Asked
-            <br className="hidden md:inline" />
-            Questions.
-          </h1>
-          
-          <div className="space-y-12">
-            {faqItems.map((item, index) => (
-              <div key={index} className="border-b border-foreground/10 pb-8 last:border-0">
-                <h3 className="text-xl font-medium mb-4 text-foreground">{item.question}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.answer}
-                </p>
-              </div>
-            ))}
+
+        <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[1400px] mx-auto">
+          <div className="max-w-3xl mx-auto">
+            <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
+              <span className="w-8 h-px bg-foreground/30" />
+              Help Center
+            </span>
+            <h1 className="text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-xl text-muted-foreground mb-16 leading-relaxed">
+              Everything you need to know about DataVision AI. Can&apos;t find your answer?{" "}
+              <Link href="/contact" className="text-foreground underline underline-offset-4 hover:opacity-80 transition-opacity">
+                Contact our team
+              </Link>.
+            </p>
+
+            <div className="space-y-16">
+              {faqCategories.map((cat) => (
+                <section key={cat.category} aria-labelledby={`faq-${cat.category.toLowerCase().replace(/\s+/g, "-")}`}>
+                  <h2
+                    id={`faq-${cat.category.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-8 flex items-center gap-3"
+                  >
+                    <span className="w-8 h-px bg-foreground/20" />
+                    {cat.category}
+                  </h2>
+                  <div className="space-y-8">
+                    {cat.items.map((item, i) => (
+                      <div key={i} className="border-b border-foreground/5 pb-8 last:border-0">
+                        <h3 className="text-lg font-semibold mb-3 text-foreground">
+                          {item.question}
+                        </h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {item.answer}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="mt-20 p-8 rounded-2xl border border-foreground/10 bg-foreground/[0.02] text-center">
+              <h2 className="text-2xl font-bold mb-3">Still have questions?</h2>
+              <p className="text-muted-foreground mb-6">
+                Our team is ready to help you get the most out of DataVision AI.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-foreground text-background text-sm font-medium hover:bg-foreground/90 transition-all"
+              >
+                Contact Support
+              </Link>
+            </div>
           </div>
         </div>
 

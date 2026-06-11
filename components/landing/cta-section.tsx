@@ -36,6 +36,8 @@ export function CTASection() {
             {/* Internal links with descriptive anchor text for sitelinks */}
             <nav aria-label="Quick links" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 text-sm text-muted-foreground">
               <Link href="/about" className="hover:text-foreground transition-colors underline underline-offset-4">About DataVision AI</Link>
+              <Link href="/faq" className="hover:text-foreground transition-colors underline underline-offset-4">FAQ</Link>
+              <Link href="/blog" className="hover:text-foreground transition-colors underline underline-offset-4">Blog & Tutorials</Link>
               <Link href="/security" className="hover:text-foreground transition-colors underline underline-offset-4">Security &amp; Compliance</Link>
               <Link href="/contact" className="hover:text-foreground transition-colors underline underline-offset-4">Contact Us</Link>
               <Link href="/privacy" className="hover:text-foreground transition-colors underline underline-offset-4">Privacy Policy</Link>

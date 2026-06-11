@@ -26,7 +26,7 @@
 - **Multi-Conversation**: Manage multiple datasets simultaneously
 - **API Access**: Generate API keys to integrate DataVision into your own projects
 - **Secure**: Data processed locally, raw rows never stored on servers
-- **Free Tier**: 100 analysis credits on sign-up
+- **Free Tier**: 1,000 analysis credits on sign-up
 
 ## Technology
 
