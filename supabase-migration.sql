@@ -14,7 +14,7 @@ create table if not exists public.plans (
 insert into public.plans (id, name, credits, price_usd, rate_limit_per_minute, rate_limit_per_day, max_api_keys)
 values
   ('free',       'Free',       100,  0,  10,  100,  1),
-  ('pro',        'Pro',        10000, 9,  60,  1000, 5),
+  ('pro',        'Pro',        1000, 10,  60,  1000, 5),
   ('enterprise', 'Enterprise', 99999, 29, 300, 9999, 20)
 on conflict (id) do nothing;
 
@@ -25,7 +25,7 @@ create table if not exists public.user_plans (
   user_id    uuid references public.profiles on delete cascade primary key,
   plan_id    text references public.plans default 'free',
   started_at timestamptz default now(),
-  resets_at  timestamptz default (now() + interval '30 days')
+  resets_at  timestamptz default null
 );
 
 -- ============================================================
@@ -43,7 +43,7 @@ alter table public.api_keys
 -- Step 4: Alter credits — add reset_at column
 -- ============================================================
 alter table public.credits
-  add column if not exists resets_at timestamptz default (now() + interval '30 days');
+  add column if not exists resets_at timestamptz default null;
 
 -- ============================================================
 -- Step 5: Alter usage_logs — add action_type and credits_used
@@ -68,11 +68,11 @@ begin
   on conflict (id) do nothing;
 
   insert into public.credits (user_id, balance, total_used, resets_at)
-  values (new.id, 100, 0, now() + interval '30 days')
+  values (new.id, 100, 0, null)
   on conflict (user_id) do nothing;
 
   insert into public.user_plans (user_id, plan_id, started_at, resets_at)
-  values (new.id, 'free', now(), now() + interval '30 days')
+  values (new.id, 'free', now(), null)
   on conflict (user_id) do nothing;
 
   return new;
@@ -119,7 +119,42 @@ end;
 $$ language plpgsql security definer;
 
 -- ============================================================
--- Step 9: Deduct credits function (atomic)
+-- Step 9: Check and reset credits function (lazy reset)
+-- ============================================================
+create or replace function public.check_and_reset_credits(
+  p_user_id uuid
+) returns void as $$
+declare
+  v_resets_at timestamptz;
+  v_plan_id   text;
+  v_credits   int;
+begin
+  -- Get active user plan & credits info
+  select c.resets_at, up.plan_id, p.credits
+  into v_resets_at, v_plan_id, v_credits
+  from public.credits c
+  join public.user_plans up on up.user_id = c.user_id
+  join public.plans p on p.id = up.plan_id
+  where c.user_id = p_user_id;
+
+  -- Reset balance if resets_at is reached
+  if v_resets_at is not null and v_resets_at < now() then
+    update public.credits
+    set
+      balance    = v_credits,
+      total_used = 0,
+      resets_at  = case
+        when v_plan_id = 'pro' then now() + interval '24 hours'
+        else now() + interval '30 days' -- fallback
+      end,
+      updated_at = now()
+    where user_id = p_user_id;
+  end if;
+end;
+$$ language plpgsql security definer;
+
+-- ============================================================
+-- Step 10: Deduct credits function (atomic)
 -- ============================================================
 create or replace function public.deduct_credits(
   p_user_id     uuid,
@@ -133,6 +168,9 @@ declare
   v_limit_ok_min boolean;
   v_limit_ok_day boolean;
 begin
+  -- Run lazy reset check first
+  perform public.check_and_reset_credits(p_user_id);
+
   -- Get plan limits
   select p.rate_limit_per_minute, p.rate_limit_per_day
   into v_plan
@@ -181,3 +219,19 @@ begin
   return jsonb_build_object('ok', true, 'balance', v_balance);
 end;
 $$ language plpgsql security definer;
+
+-- ============================================================
+-- Step 11: Add credits function (top-up)
+-- ============================================================
+create or replace function public.add_credits(
+  p_user_id uuid,
+  p_amount  int
+) returns void as $$
+begin
+  update public.credits
+  set balance = balance + p_amount,
+      updated_at = now()
+  where user_id = p_user_id;
+end;
+$$ language plpgsql security definer;
+

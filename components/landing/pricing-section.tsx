@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
-import { Check } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Check, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 const tiers = [
   {
@@ -10,7 +12,7 @@ const tiers = [
     price: "$0",
     description: "Perfect for exploring DataVision AI.",
     features: [
-      "100 Analysis Credits",
+      "100 lifetime Analysis Credits",
       "Basic charts & graphs",
       "CSV & Excel support",
       "Community support",
@@ -21,11 +23,11 @@ const tiers = [
   },
   {
     name: "Pro",
-    price: "$15",
+    price: "$10",
     period: "/month",
     description: "For professionals who need deeper insights.",
     features: [
-      "10,000 Analysis Credits",
+      "1,000 daily Analysis Credits",
       "Advanced interactive visualizations",
       "Export to PDF / PNG",
       "Priority email support",
@@ -53,6 +55,61 @@ const tiers = [
 ];
 
 export function PricingSection() {
+  const supabase = createClient();
+  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+  const [loadingTier, setLoadingTier] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+  }, [supabase.auth]);
+
+  const handleCtaClick = async (e: React.MouseEvent, tier: typeof tiers[number]) => {
+    if (tier.name === "Free") {
+      if (user) {
+        e.preventDefault();
+        router.push("/chat");
+      }
+      return;
+    }
+
+    if (tier.name === "Pro") {
+      e.preventDefault();
+      if (!user) {
+        router.push("/login?redirect=/");
+        return;
+      }
+
+      try {
+        setLoadingTier(tier.name);
+        const res = await fetch("/api/payments/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to initiate checkout");
+        }
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error("Checkout URL was not returned");
+        }
+      } catch (err: any) {
+        console.error("Payment redirect error:", err);
+        alert(err.message || "Unable to start checkout. Please try again.");
+      } finally {
+        setLoadingTier(null);
+      }
+    }
+  };
+
   return (
     <section id="pricing" className="relative py-24 sm:py-32 overflow-hidden">
       {/* Background Glow */}
@@ -120,13 +177,21 @@ export function PricingSection() {
               
               <Link
                 href={tier.href}
+                onClick={(e) => handleCtaClick(e, tier)}
                 className={`mt-8 block rounded-full px-3 py-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200 ${
                   tier.popular
                     ? "bg-background text-foreground hover:bg-background/90"
                     : "bg-primary/10 text-primary hover:bg-primary/20"
-                }`}
+                } ${loadingTier === tier.name ? "pointer-events-none opacity-80" : ""}`}
               >
-                {tier.cta}
+                {loadingTier === tier.name ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Processing...
+                  </span>
+                ) : (
+                  tier.cta
+                )}
               </Link>
             </div>
           ))}
@@ -135,3 +200,4 @@ export function PricingSection() {
     </section>
   );
 }
+

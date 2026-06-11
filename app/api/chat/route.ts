@@ -3,6 +3,7 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { deductCredits, CREDIT_COSTS } from "@/lib/credits";
 import { validateApiKey } from "@/lib/api-key-validator";
+import { createAdminClient } from "@/lib/supabase/server";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
@@ -44,6 +45,25 @@ export async function POST(request: Request) {
   }
 
   const formData = await request.formData();
+  const modelName = formData.get("model") as string | null;
+
+  // Restrict Pro model to Pro / Enterprise subscription plans
+  if (modelName === "DataVision Pro") {
+    const adminDb = createAdminClient();
+    const { data: userPlan } = await adminDb
+      .from("user_plans")
+      .select("plan_id")
+      .eq("user_id", userId)
+      .single();
+
+    if (userPlan?.plan_id !== "pro" && userPlan?.plan_id !== "enterprise") {
+      return NextResponse.json(
+        { error: "DataVision Pro requires a Pro Plan subscription. Please upgrade in your account settings." },
+        { status: 403 }
+      );
+    }
+  }
+
   const file = formData.get("file") as File | null;
   const hasFile = !!file && file.size > 0;
   const action = hasFile ? "chat_with_file" as const : "chat_followup" as const;
@@ -65,6 +85,7 @@ export async function POST(request: Request) {
   // Rebuild FormData for backend (re-read file bytes to avoid 0-byte issues)
   const backendFormData = new FormData();
   backendFormData.append("message", (formData.get("message") as string) || "");
+  backendFormData.append("model", modelName || "DataVision Flash");
 
   if (file && hasFile) {
     const buf = await file.arrayBuffer();

@@ -26,6 +26,19 @@ export default function ChatPage() {
   const [cachedSchema, setCachedSchema] = React.useState<string>("");
   const [cachedDfJson, setCachedDfJson] = React.useState<string>("");
   const [isDragging, setIsDragging] = React.useState(false);
+  const [userPlan, setUserPlan] = React.useState<string>("free");
+
+  // Load active plan from API
+  React.useEffect(() => {
+    fetch("/api/credits")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.plan?.plan_id) {
+          setUserPlan(data.plan.plan_id);
+        }
+      })
+      .catch((err) => console.error("Error loading user plan:", err));
+  }, []);
 
   // bumped whenever sidebar needs re-reading
   const [sidebarRefresh, setSidebarRefresh] = React.useState(0);
@@ -163,6 +176,7 @@ export default function ChatPage() {
     try {
       const formData = new FormData();
       formData.append("message", content);
+      formData.append("model", currentModel);
       if (file) {
         formData.append("file", file);
       } else if (cachedSchema) {
@@ -295,6 +309,7 @@ export default function ChatPage() {
         <ChatHeader
           currentModel={currentModel}
           onModelChange={setCurrentModel}
+          userPlan={userPlan}
           activeChatId={activeChat?.id}
           onSelectChat={handleSelectChat}
           onNewChat={handleNewChat}

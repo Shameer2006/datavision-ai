@@ -8,6 +8,9 @@ export async function GET() {
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const user = session.user;
 
+  // Lazy reset check
+  await supabase.rpc("check_and_reset_credits", { p_user_id: user.id });
+
   const [{ data: credits }, { data: userPlan }] = await Promise.all([
     supabase
       .from("credits")

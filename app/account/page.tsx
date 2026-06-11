@@ -72,6 +72,67 @@ export default function AccountPage() {
     load();
   }, []);
 
+  const [upgrading, setUpgrading] = React.useState(false);
+
+  const handleUpgradeToPro = async () => {
+    try {
+      setUpgrading(true);
+      const res = await fetch("/api/payments/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to initiate checkout");
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Checkout URL was not returned");
+      }
+    } catch (err: any) {
+      console.error("Payment redirect error:", err);
+      alert(err.message || "Unable to start checkout. Please try again.");
+    } finally {
+      setUpgrading(false);
+    }
+  };
+
+  const [buyingTopUp, setBuyingTopUp] = React.useState(false);
+
+  const handleBuyTopUp = async () => {
+    try {
+      setBuyingTopUp(true);
+      const res = await fetch("/api/payments/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ type: "topup" }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to initiate top-up");
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Checkout URL was not returned");
+      }
+    } catch (err: any) {
+      console.error("Top-up redirect error:", err);
+      alert(err.message || "Unable to start top-up checkout. Please try again.");
+    } finally {
+      setBuyingTopUp(false);
+    }
+  };
+
   const handleSaveProfile = async () => {
     if (!userId) return;
     await supabase.from("profiles").update({ name: profile.name, email: profile.email }).eq("id", userId);
@@ -166,9 +227,21 @@ export default function AccountPage() {
             {/* Profile Summary Card */}
             <div className="rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl overflow-hidden p-6 relative">
               <div className="absolute top-0 right-0 p-4">
-                 <span className="inline-flex items-center gap-1.5 text-[10px] font-medium px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                   Pro
+                 <span className={`inline-flex items-center gap-1.5 text-[10px] font-medium px-2 py-1 rounded-full ${
+                   plan?.name === "Pro"
+                     ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                     : plan?.name === "Enterprise"
+                     ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                     : "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20"
+                 }`}>
+                   <span className={`h-1.5 w-1.5 rounded-full ${
+                     plan?.name === "Pro"
+                       ? "bg-emerald-400 animate-pulse"
+                       : plan?.name === "Enterprise"
+                       ? "bg-purple-400 animate-pulse"
+                       : "bg-zinc-400"
+                   }`} />
+                   {plan?.name || "Free"}
                  </span>
               </div>
               
@@ -316,6 +389,24 @@ export default function AccountPage() {
                       <span>Resets {resets_at ? new Date(resets_at).toLocaleDateString(undefined, { month: "short", day: "numeric" }) : "—"}</span>
                       {plan && <span>{plan.rate_limit_per_minute} req/min · {plan.rate_limit_per_day} req/day</span>}
                     </div>
+
+                    <button
+                      onClick={handleBuyTopUp}
+                      disabled={buyingTopUp}
+                      className="w-full mt-2 h-10 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/20 text-xs font-semibold shadow-lg shadow-amber-500/5 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                    >
+                      {buyingTopUp ? (
+                        <>
+                          <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                          Redirecting to checkout...
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                          Buy 200 Credits ($2)
+                        </>
+                      )}
+                    </button>
                   </div>
 
                   {/* 7-day usage mini chart */}
@@ -357,6 +448,28 @@ export default function AccountPage() {
                       </div>
                     ))}
                   </div>
+
+                  {plan?.name === "Free" && (
+                    <div className="pt-4 border-t border-white/5">
+                      <button
+                        onClick={handleUpgradeToPro}
+                        disabled={upgrading}
+                        className="w-full h-10 rounded-xl bg-gradient-to-r from-blue-500 to-violet-600 hover:from-blue-600 hover:to-violet-700 text-white text-xs font-semibold shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                      >
+                        {upgrading ? (
+                          <>
+                            <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                            Redirecting to checkout...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="h-3.5 w-3.5" />
+                            Upgrade to Pro ($10/mo)
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
