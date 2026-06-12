@@ -6,8 +6,8 @@ import { FooterSection } from "@/components/landing/footer-section";
 import Link from "next/link";
 
 export const metadata: Metadata = genMeta({
-  title: "FAQ — Frequently Asked Questions About DataVision AI",
-  description: "Find answers to common questions about DataVision AI — how it works, pricing, supported file formats, data security, API access, and how to analyze your data without coding.",
+  title: "FAQ — Common Questions Answered",
+  description: "Answers to common questions about DataVision AI — pricing, file formats, security, API access, and getting started.",
   path: "/faq",
   keywords: [
     "DataVision AI FAQ",

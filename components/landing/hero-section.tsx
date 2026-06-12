@@ -59,7 +59,7 @@ export function HeroSection() {
             href="/about"
             className="inline-flex items-center gap-2 px-8 py-3.5 text-base font-medium text-foreground rounded-full border border-foreground/15 hover:bg-foreground/5 transition-all duration-300"
           >
-            Learn More
+            Learn About DataVision AI
           </Link>
         </div>
 

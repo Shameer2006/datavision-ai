@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "DataVision AI",
   url: "https://datavision-ai.vercel.app",
   description:
-    "DataVision AI is a free AI-powered data analytics platform. Upload CSV or Excel files, ask questions in plain English, and get instant interactive charts — no coding or SQL required.",
+    "Free AI data analytics platform. Upload CSV or Excel files, ask questions in plain English, and get instant interactive charts — no coding required.",
   keywords: [
     // High-volume primary
     "AI data analytics",

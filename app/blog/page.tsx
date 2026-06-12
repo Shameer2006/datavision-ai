@@ -7,8 +7,8 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = genMeta({
-  title: "Blog — Data Analytics Tips, Guides & Tutorials",
-  description: "Guides, tutorials and tips on AI-powered data analytics, CSV visualization, and how to analyze your data without coding using DataVision AI.",
+  title: "Blog — Analytics Tips & Guides",
+  description: "Guides, tutorials, and tips on AI-powered data analytics, CSV visualization, and no-code data analysis.",
   path: "/blog",
   keywords: ["data analytics blog", "CSV analysis tutorial", "data visualization guide", "AI analytics tips", "how to analyze data"],
 });

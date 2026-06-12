@@ -7,8 +7,8 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = genMeta({
-  title: "Natural Language Data Analysis — Ask Questions, Get Charts Instantly",
-  description: "Discover how natural language data analysis lets you query your data using plain English instead of SQL. No coding required — get instant AI-generated charts.",
+  title: "Natural Language Data Analysis — Get Instant Charts",
+  description: "Query your data using plain English instead of SQL. Get instant AI-generated charts — no coding required.",
   path: "/blog/natural-language-data-analysis",
   keywords: [
     "natural language data analysis", "ask questions about data",

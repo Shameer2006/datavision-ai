@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — AI-Powered Data Analytics & Visualization`,
+    default: `${siteConfig.name} — Free AI Data Analytics`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -26,14 +26,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: `${siteConfig.name} — AI-Powered Data Analytics & Visualization`,
+    title: `${siteConfig.name} — Free AI Data Analytics`,
     description: siteConfig.description,
     siteName: siteConfig.name,
     images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: `${siteConfig.name} — Transform your data into insights` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — AI-Powered Data Analytics`,
+    title: `${siteConfig.name} — Free AI Data Analytics`,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
     creator: "@datavisionai",

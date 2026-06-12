@@ -7,8 +7,8 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = genMeta({
-  title: "Best Free Data Visualization Tool in 2025 — No Code Required",
-  description: "Compare the best free data visualization tools in 2025. See why DataVision AI beats Tableau, Power BI, and Google Looker for quick, no-code data analysis.",
+  title: "Best Free Data Visualization Tool 2025",
+  description: "Compare the best free data visualization tools in 2025. See why DataVision AI is the fastest no-code option.",
   path: "/blog/free-data-visualization-tool",
   keywords: [
     "free data visualization tool", "best data visualization tool 2025",

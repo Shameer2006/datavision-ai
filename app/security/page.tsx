@@ -6,8 +6,8 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { Shield, Lock, EyeOff, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = genMeta({
-  title: "Security & Compliance — AES-256, SOC2 & GDPR",
-  description: "DataVision AI uses AES-256 encryption, TLS 1.3 transport security, zero-knowledge row access, and SOC2/GDPR/HIPAA-aligned practices to keep your data completely safe.",
+  title: "Security & Compliance",
+  description: "DataVision AI uses AES-256 encryption, TLS 1.3, and SOC2/GDPR-aligned practices. Your data never leaves your control.",
   path: "/security",
   keywords: ["enterprise data security", "AES-256 encryption", "SOC2 compliance analytics", "GDPR data analytics", "HIPAA compliant AI", "secure data visualization", "zero-knowledge analytics", "TLS 1.3 data platform"]
 });
@@ -61,6 +61,7 @@ export default function SecurityPage() {
             Security isn&apos;t a feature—it&apos;s the foundation of everything we build. We implement multiple layers of protection to ensure your insights remain yours alone.
           </div>
 
+          <h2 className="sr-only">How We Protect Your Data</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/10 border border-foreground/10">
             {securityFeatures.map((feature, i) => (
               <div key={i} className="bg-background p-10 lg:p-12">

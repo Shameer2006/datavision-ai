@@ -5,8 +5,8 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "About DataVision AI — Our Mission to Democratize Data Analytics",
-  description: "DataVision AI was built to make data analytics accessible to everyone. Learn how we use Google Gemini AI to turn complex datasets into instant, beautiful visualizations — no coding required.",
+  title: "About Us — AI Data Analytics Mission",
+  description: "Learn how DataVision AI uses Gemini to turn spreadsheets into instant charts. Free, no-code data analytics for everyone.",
   path: "/about",
   keywords: ["about DataVision AI", "AI data analytics company", "data visualization startup", "democratize data analytics", "AI business intelligence", "no-code analytics platform"]
 });
@@ -44,13 +44,13 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-24">
             <div>
-              <h3 className="text-xl font-medium mb-4 text-foreground">The Vision</h3>
+              <h2 className="text-xl font-medium mb-4 text-foreground">The Vision</h2>
               <p className="text-muted-foreground leading-relaxed">
                 A world where every decision is informed by clear, instant, and beautiful data visualizations that anyone can create.
               </p>
             </div>
             <div>
-              <h3 className="text-xl font-medium mb-4 text-foreground">The Technology</h3>
+              <h2 className="text-xl font-medium mb-4 text-foreground">The Technology</h2>
               <p className="text-muted-foreground leading-relaxed">
                 Enterprise-grade metadata processing that ensures security while delivering lightning-fast insights and schema mapping.
               </p>

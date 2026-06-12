@@ -9,8 +9,8 @@ import { StructuredData, generateBreadcrumbSchema, generateFAQSchema } from "@/l
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — Free AI Data Analytics & CSV Visualization Tool`,
-  description: "Free AI-powered data analytics tool. Upload any CSV or Excel file, ask questions in plain English, and get instant interactive charts in seconds. No coding or SQL required.",
+  title: `${siteConfig.name} — Free AI Data Analytics Platform`,
+  description: "Upload CSV or Excel files, ask questions in plain English, and get instant interactive charts. Free, no coding required.",
   alternates: { canonical: siteConfig.url },
   keywords: siteConfig.keywords,
 };
