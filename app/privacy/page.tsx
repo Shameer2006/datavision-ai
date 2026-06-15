@@ -5,7 +5,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "Privacy Policy — DataVision AI",
+  title: "Privacy Policy",
   description: "Read the DataVision AI Privacy Policy to understand how we collect, use, and protect your personal data and uploaded datasets.",
   path: "/privacy",
   keywords: ["DataVision AI privacy policy", "data privacy", "GDPR compliance", "user data protection"],

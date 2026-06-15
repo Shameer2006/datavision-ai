@@ -30,7 +30,9 @@ export function generateMetadata({
   const fullTitle = `${title} | ${siteConfig.name}`;
 
   return {
-    title: fullTitle,
+    title: {
+      absolute: fullTitle,
+    },
     description,
     keywords: allKeywords,
     authors: siteConfig.authors,

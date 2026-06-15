@@ -6,7 +6,7 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { ApiDocsContent } from "./api-docs-content";
 
 export const metadata: Metadata = genMeta({
-  title: "How to Integrate DataVision API — Developer Guide",
+  title: "Integrate DataVision API — Developer Guide",
   description: "Learn how to generate an API key, authenticate requests, and programmatically analyze datasets using the DataVision AI developer API.",
   path: "/blog/api-integration",
   keywords: ["DataVision API", "API integration guide", "developer docs", "data analysis API", "Python API example"]

@@ -5,7 +5,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "Terms of Service — DataVision AI",
+  title: "Terms of Service",
   description: "Read the DataVision AI Terms of Service to understand the rules, license, and guidelines for using our AI-powered data analytics platform.",
   path: "/terms",
   keywords: ["DataVision AI terms of service", "SaaS terms", "usage policy", "platform agreement"],
