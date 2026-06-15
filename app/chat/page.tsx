@@ -251,6 +251,20 @@ export default function ChatPage() {
   };
 
   // -------------------------------------------------------------------
+  // Check for staged file from landing page on mount
+  // -------------------------------------------------------------------
+  React.useEffect(() => {
+    if (activeChat && typeof window !== "undefined" && (window as any).__stagedFile) {
+      const file = (window as any).__stagedFile;
+      delete (window as any).__stagedFile;
+      // Small timeout to let activeChat state fully initialize
+      setTimeout(() => {
+        handleSendMessage("", file);
+      }, 250);
+    }
+  }, [activeChat]);
+
+  // -------------------------------------------------------------------
   // Drag & drop
   // -------------------------------------------------------------------
   const handleDragOver = (e: React.DragEvent) => {
