@@ -134,7 +134,7 @@ export function Navigation() {
       {/* Mobile Menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="px-6 pb-6 pt-2 bg-background/95 backdrop-blur-xl border-b border-foreground/5 space-y-1">

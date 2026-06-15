@@ -7,6 +7,7 @@ import { ChatMessages } from "@/components/chat/chat-messages";
 import { ChatInput } from "@/components/chat/chat-input";
 import { Message } from "@/components/chat/message-bubble";
 import { BackendWaker } from "@/components/chat/backend-waker";
+import { getStagedFile, clearStagedFile } from "@/lib/staged-file-db";
 import { createConversation,
   getConversation,
   saveConversation,
@@ -253,15 +254,41 @@ export default function ChatPage() {
   // -------------------------------------------------------------------
   // Check for staged file from landing page on mount
   // -------------------------------------------------------------------
+  const stagedFileProcessed = React.useRef(false);
+
   React.useEffect(() => {
-    if (activeChat && typeof window !== "undefined" && (window as any).__stagedFile) {
-      const file = (window as any).__stagedFile;
-      delete (window as any).__stagedFile;
-      // Small timeout to let activeChat state fully initialize
-      setTimeout(() => {
-        handleSendMessage("", file);
-      }, 250);
-    }
+    if (!activeChat || stagedFileProcessed.current) return;
+
+    const processStagedFile = async () => {
+      stagedFileProcessed.current = true;
+
+      // 1. Try to get file from IndexedDB (persists across page reloads/Supabase OAuth redirects)
+      try {
+        const staged = await getStagedFile();
+        if (staged) {
+          await clearStagedFile();
+          setTimeout(() => {
+            handleSendMessage(staged.prompt || "", staged.file || undefined);
+          }, 250);
+          return;
+        }
+      } catch (err) {
+        console.error("Error reading staged file from IndexedDB:", err);
+      }
+
+      // 2. Fallback to global window staging
+      if (typeof window !== "undefined" && (window as any).__stagedFile) {
+        const file = (window as any).__stagedFile;
+        const promptText = (window as any).__stagedPrompt || "";
+        delete (window as any).__stagedFile;
+        delete (window as any).__stagedPrompt;
+        setTimeout(() => {
+          handleSendMessage(promptText, file);
+        }, 250);
+      }
+    };
+
+    processStagedFile();
   }, [activeChat]);
 
   // -------------------------------------------------------------------
