@@ -5,7 +5,7 @@ import { FeaturesSection } from "@/components/landing/features-section";
 import { PricingSection } from "@/components/landing/pricing-section";
 import { CTASection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
-import { StructuredData, generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/structured-data";
+import { StructuredData, generateBreadcrumbSchema, generateFAQSchema, generateSoftwareAppSchema } from "@/lib/seo/structured-data";
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = {
@@ -39,6 +39,7 @@ const faqSchema = generateFAQSchema([
 ]);
 
 const breadcrumbSchema = generateBreadcrumbSchema([{ name: "Home", path: "/" }]);
+const softwareSchema = generateSoftwareAppSchema();
 
 // SiteLinksSearchBox schema — tells Google to show a search box in sitelinks
 const siteLinksSearchBoxSchema = {
@@ -81,6 +82,7 @@ export default function Home() {
       <StructuredData data={breadcrumbSchema} />
       <StructuredData data={siteLinksSearchBoxSchema} />
       <StructuredData data={siteNavigationSchema} />
+      <StructuredData data={softwareSchema} />
       <main className="relative min-h-screen overflow-x-hidden">
         <Navigation />
         <HeroSection />

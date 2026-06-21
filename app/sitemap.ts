@@ -22,6 +22,7 @@ const routes: RouteConfig[] = [
   { path: "/blog/free-data-visualization-tool",     priority: 0.9, changeFrequency: "monthly" },
   { path: "/blog/natural-language-data-analysis",   priority: 0.9, changeFrequency: "monthly" },
   { path: "/blog/api-integration",                  priority: 0.8, changeFrequency: "monthly" },
+  { path: "/blog/secure-ai-data-analytics",         priority: 0.9, changeFrequency: "monthly" },
   // Legal
   { path: "/privacy",                               priority: 0.4, changeFrequency: "yearly"  },
   { path: "/terms",                                 priority: 0.4, changeFrequency: "yearly"  },
@@ -32,6 +33,7 @@ const blogLastModified: Record<string, string> = {
   "/blog/free-data-visualization-tool":   "2025-06-01",
   "/blog/natural-language-data-analysis": "2025-06-01",
   "/blog/api-integration":                "2025-06-01",
+  "/blog/secure-ai-data-analytics":       "2026-06-21",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

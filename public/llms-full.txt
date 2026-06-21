@@ -16,7 +16,7 @@ DataVision AI is a web-based, AI-powered data analytics platform that transforms
 1. User signs in with Google (via Supabase OAuth)
 2. User uploads a CSV or Excel file by drag-and-drop or file picker
 3. User types a question in plain English in the chat interface
-4. Google Gemini AI analyzes the dataset schema and the question
+4. DataVision AI analyzes the dataset schema and the question
 5. The backend (Python/FastAPI) generates a Plotly chart configuration
 6. The frontend renders a fully interactive chart with a text summary
 
@@ -38,7 +38,7 @@ No. DataVision AI is designed for non-technical users. You interact entirely thr
 Yes. Users can generate a DataVision API key from their account settings and use it to call the DataVision API endpoints for chart generation and data analysis.
 
 **What AI model powers DataVision?**
-Google Gemini via the official Google Generative AI SDK.
+DataVision AI.
 
 ## Security & Compliance
 

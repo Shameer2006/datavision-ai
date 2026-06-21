@@ -15,6 +15,14 @@ export const metadata: Metadata = genMeta({
 
 const posts = [
   {
+    slug: "secure-ai-data-analytics",
+    title: "Why Secure AI Data Analytics Matters — Protecting Your Business",
+    description: "Learn the hidden risks of using unsafe data platforms and why zero-knowledge, metadata-only processing keeps your enterprise safe.",
+    date: "2026-06-21",
+    readTime: "6 min read",
+    tags: ["Security", "Enterprise", "AI"],
+  },
+  {
     slug: "analyze-csv-with-ai",
     title: "How to Analyze a CSV File with AI — No Coding Required",
     description: "Step-by-step guide to uploading your CSV file and getting instant charts and insights using DataVision AI.",
@@ -86,8 +94,11 @@ export default function BlogPage() {
             <h1 className="text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               Blog
             </h1>
-            <p className="text-xl text-muted-foreground mb-16 leading-relaxed">
+            <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
               Guides, tutorials, and tips on AI-powered data analytics and visualization.
+            </p>
+            <p className="text-base text-muted-foreground mb-16 leading-relaxed">
+              Whether you are a business analyst looking for quick insights, a developer building data integrations, or a student exploring datasets for the first time, our blog covers everything from step-by-step CSV analysis tutorials to enterprise security best practices. Learn how to turn raw spreadsheets into actionable charts in seconds.
             </p>
 
             <div className="space-y-8">

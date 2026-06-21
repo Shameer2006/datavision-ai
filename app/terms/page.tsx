@@ -23,58 +23,109 @@ export default function TermsPage() {
       <StructuredData data={breadcrumbSchema} />
       <main className="relative min-h-screen overflow-x-hidden noise-overlay">
         <Navigation />
-      
-      <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[1400px] mx-auto">
-        <div className="max-w-3xl">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
-            <span className="w-8 h-px bg-foreground/30" />
-            Legal
-          </span>
-          <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-12">
-            Terms of Service
-          </h1>
-          
-          <div className="space-y-12 text-lg text-muted-foreground leading-relaxed">
-            <section>
-              <h2 className="text-2xl font-display text-foreground mb-6">1. Acceptance of Terms</h2>
-              <p>
-                By accessing or using DataVision AI, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our platform.
-              </p>
-            </section>
 
-            <section>
-              <h2 className="text-2xl font-display text-foreground mb-6">2. Description of Service</h2>
-              <p>
-                DataVision AI provides an AI-powered data visualization and analytics platform. We grant you a non-exclusive, non-transferable, revocable license to use the service for your business or personal needs.
-              </p>
-            </section>
+        <div className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 px-6 lg:px-12 max-w-[1400px] mx-auto">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
+              <span className="w-8 h-px bg-foreground/30" />
+              Legal
+            </span>
+            <h1 className="text-5xl lg:text-7xl font-display tracking-tight mb-12">
+              Terms of Service
+            </h1>
 
-            <section>
-              <h2 className="text-2xl font-display text-foreground mb-6">3. User Obligations</h2>
-              <p>
-                You are responsible for maintaining the confidentiality of your account and for all activities that occur under your account. You agree to use the service in compliance with all applicable laws.
-              </p>
-            </section>
+            <div className="space-y-12 text-lg text-muted-foreground leading-relaxed">
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">1. Acceptance of Terms</h2>
+                <p>
+                  By accessing or using DataVision AI, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our platform. These terms apply to all visitors, users, and others who access DataVision AI.
+                </p>
+              </section>
 
-            <section>
-              <h2 className="text-2xl font-display text-foreground mb-6">4. Intellectual Property</h2>
-              <p>
-                All content, trademarks, and data on our platform are the property of DataVision AI. You may not use, copy, or distribute any part of the platform without our prior written consent.
-              </p>
-            </section>
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">2. Description of Service</h2>
+                <p>
+                  DataVision AI provides an AI-powered data visualization and analytics platform. You can upload CSV or Excel files, ask questions in plain English, and receive interactive charts and data summaries. We grant you a non-exclusive, non-transferable, revocable license to use the service for your business or personal needs.
+                </p>
+              </section>
 
-            <section>
-              <h2 className="text-2xl font-display text-foreground mb-6">5. Limitation of Liability</h2>
-              <p>
-                DataVision AI shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the platform.
-              </p>
-            </section>
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">3. Accounts and Registration</h2>
+                <p>
+                  You must sign in with a Google account to use DataVision AI. You are responsible for keeping your account secure. You must not share your account credentials or API keys with unauthorized parties. If you suspect unauthorized access, contact us immediately at hello@datavision.ai.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">4. Credits and Usage</h2>
+                <p>DataVision AI operates on a credit-based system:</p>
+                <ul className="list-disc pl-6 space-y-3 mt-4">
+                  <li>Free tier users receive 100 credits that reset every 30 days.</li>
+                  <li>Uploading a new file costs 8 credits per message.</li>
+                  <li>Follow-up messages cost 4 credits each.</li>
+                  <li>API calls cost between 4 and 6 credits per request.</li>
+                  <li>Credits are non-transferable and have no cash value.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">5. API Usage</h2>
+                <p>
+                  Users who generate API keys agree to use them responsibly. You must not exceed your plan&apos;s rate limits. Automated abuse, scraping, or reselling API access is prohibited. We reserve the right to revoke API keys that violate these terms.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">6. Data Ownership</h2>
+                <p>
+                  You retain full ownership of all data you upload to DataVision AI. We do not claim any rights over your datasets, charts, or analysis results. You are free to download, share, and use any output generated by the platform.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">7. Intellectual Property</h2>
+                <p>
+                  All content, trademarks, logos, and software on our platform are the property of DataVision AI. You may not copy, modify, or distribute any part of the platform without our prior written consent. The DataVision AI name and logo are registered trademarks.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">8. Prohibited Activities</h2>
+                <p>You agree not to:</p>
+                <ul className="list-disc pl-6 space-y-3 mt-4">
+                  <li>Use the platform for any unlawful purpose.</li>
+                  <li>Upload malicious files or attempt to exploit security vulnerabilities.</li>
+                  <li>Reverse-engineer, decompile, or disassemble any part of the service.</li>
+                  <li>Resell or redistribute access to the platform without authorization.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">9. Termination</h2>
+                <p>
+                  We may suspend or terminate your account if you violate these terms. You may delete your account at any time from Account Settings. Upon termination, your conversation history and API keys will be permanently deleted.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">10. Limitation of Liability</h2>
+                <p>
+                  DataVision AI shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the platform. Our total liability is limited to the amount you have paid us in the 12 months before the claim.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">11. Contact</h2>
+                <p>
+                  If you have questions about these terms, contact us at <a href="mailto:hello@datavision.ai" className="text-foreground underline underline-offset-4 hover:opacity-80 transition-opacity">hello@datavision.ai</a>.
+                </p>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
 
-      <FooterSection />
-    </main>
+        <FooterSection />
+      </main>
     </>
   );
 }

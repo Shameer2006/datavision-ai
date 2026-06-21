@@ -103,6 +103,25 @@ export default function ContactPage() {
             </form>
           </div>
         </div>
+
+        {/* SEO Content Addition */}
+        <div className="mt-32 max-w-4xl mx-auto border-t border-foreground/10 pt-16">
+          <h2 className="text-3xl font-display tracking-tight mb-8">Frequently Asked Questions</h2>
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-xl font-medium mb-2 text-foreground">How quickly do you respond to sales inquiries?</h3>
+              <p className="text-muted-foreground leading-relaxed">Our enterprise sales team typically responds to all inquiries within 24 hours during standard business days. If you request a custom demo, we will work with you to schedule a meeting within 2-3 business days depending on your timezone.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-medium mb-2 text-foreground">Do you offer custom integrations for Enterprise customers?</h3>
+              <p className="text-muted-foreground leading-relaxed">Yes. While DataVision AI supports standard CSV and Excel file uploads out of the box, our Enterprise tier includes custom data pipeline integrations. Please mention your specific database or warehouse (e.g., Snowflake, BigQuery, PostgreSQL) in your message.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-medium mb-2 text-foreground">Where is your support team located?</h3>
+              <p className="text-muted-foreground leading-relaxed">We have a global support team headquartered in San Francisco, CA, with dedicated representatives in Europe and Asia to provide 24/7 coverage for our Enterprise clients.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <FooterSection />

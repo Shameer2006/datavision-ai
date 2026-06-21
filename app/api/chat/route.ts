@@ -17,7 +17,7 @@ async function getUserIdFromRequest(request: Request): Promise<{ userId: string 
     return { userId: null };
   }
 
-  // 2. Session cookie auth — getSession() reads from cookie, no network call
+  // 2. Session cookie auth — getUser() verifies the token with Supabase Auth server
   try {
     const cookieStore = await cookies();
     const supabase = createServerClient(
@@ -30,8 +30,8 @@ async function getUserIdFromRequest(request: Request): Promise<{ userId: string 
         },
       }
     );
-    const { data: { session } } = await supabase.auth.getSession();
-    return { userId: session?.user?.id ?? null };
+    const { data: { user } } = await supabase.auth.getUser();
+    return { userId: user?.id ?? null };
   } catch {
     return { userId: null };
   }
@@ -104,7 +104,7 @@ export async function POST(request: Request) {
     const backendRes = await fetch(`${BACKEND_URL}/api/chat`, {
       method: "POST",
       body: backendFormData,
-      signal: AbortSignal.timeout(60000),
+      signal: AbortSignal.timeout(120_000),
     });
 
     const data = await backendRes.json();

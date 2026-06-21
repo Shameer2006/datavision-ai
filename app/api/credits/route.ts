@@ -3,10 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function GET() {
   const supabase = await createClient();
-  // getSession reads from cookie — no network roundtrip
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const user = session.user;
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   // Lazy reset check
   await supabase.rpc("check_and_reset_credits", { p_user_id: user.id });

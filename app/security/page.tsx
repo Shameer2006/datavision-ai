@@ -74,6 +74,29 @@ export default function SecurityPage() {
             ))}
           </div>
 
+          <div className="mt-24 space-y-12">
+            <h2 className="text-3xl font-display tracking-tight text-foreground">How We Protect Your Data</h2>
+            
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-medium mb-3 text-foreground">What happens when I upload a file?</h3>
+                <p className="text-muted-foreground leading-relaxed">When you upload a CSV or Excel file, DataVision AI extracts only the schema (column names, data types, and row count) in transient memory. The raw file is never written to disk or stored permanently. After the analysis session, all temporary data is purged.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-medium mb-3 text-foreground">How are API keys secured?</h3>
+                <p className="text-muted-foreground leading-relaxed">API keys are hashed using a one-way cryptographic function before storage. The plain-text key is shown to you exactly once at generation time. Even our own team cannot retrieve your key. If you lose it, you must generate a new one.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-medium mb-3 text-foreground">What compliance standards do you meet?</h3>
+                <p className="text-muted-foreground leading-relaxed">DataVision AI is built to align with SOC2 Type II, GDPR, and HIPAA requirements. We use Row-Level Security (RLS) on all Supabase database tables to ensure that users can only access their own data. All connections use TLS 1.3, and data at rest is encrypted with AES-256.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-medium mb-3 text-foreground">Can I request a security audit or penetration test report?</h3>
+                <p className="text-muted-foreground leading-relaxed">Yes. Enterprise customers can request our latest security assessment and penetration test results. Contact our compliance team at hello@datavision.ai to schedule a review.</p>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-24 py-16 px-10 bg-foreground text-background rounded-2xl">
             <h2 className="text-3xl font-display mb-6">Need a security overview?</h2>
             <p className="text-background/80 mb-8 max-w-lg">

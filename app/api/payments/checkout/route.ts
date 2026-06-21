@@ -5,13 +5,11 @@ import DodoPayments from "dodopayments";
 export async function POST(request: Request) {
   try {
     const supabase = await createClient();
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { user } } = await supabase.auth.getUser();
     
-    if (!session?.user) {
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    
-    const user = session.user;
     
     const apiKey = process.env.DODO_PAYMENTS_API_KEY;
     if (!apiKey) {
