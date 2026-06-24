@@ -8,12 +8,14 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { StructuredData, generateBreadcrumbSchema, generateFAQSchema, generateSoftwareAppSchema } from "@/lib/seo/structured-data";
 import { siteConfig } from "@/lib/seo/config";
 
-export const metadata: Metadata = {
+import { generateMetadata as genMeta } from "@/lib/seo/metadata";
+
+export const metadata: Metadata = genMeta({
   title: `${siteConfig.name} — Free AI Data Analytics Platform`,
   description: "Upload CSV or Excel files, ask questions in plain English, and get instant interactive charts. Free, no coding required.",
-  alternates: { canonical: siteConfig.url },
+  path: "/",
   keywords: siteConfig.keywords,
-};
+});
 
 const faqSchema = generateFAQSchema([
   {
