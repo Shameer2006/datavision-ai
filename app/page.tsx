@@ -11,7 +11,7 @@ import { siteConfig } from "@/lib/seo/config";
 import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = genMeta({
-  title: `${siteConfig.name} — Free AI Data Analytics Platform`,
+  title: "DataVision AI — Free AI Data Analytics",
   description: "Upload CSV or Excel files, ask questions in plain English, and get instant interactive charts. Free, no coding required.",
   path: "/",
   keywords: siteConfig.keywords,

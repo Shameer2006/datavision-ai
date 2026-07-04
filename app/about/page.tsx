@@ -5,7 +5,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 
 export const metadata: Metadata = genMeta({
-  title: "About Us — AI Data Analytics Mission",
+  title: "About Us — AI Data Analytics",
   description: "Learn how DataVision AI uses Gemini to turn spreadsheets into instant charts. Free, no-code data analytics for everyone.",
   path: "/about",
   keywords: ["about DataVision AI", "AI data analytics company", "data visualization startup", "democratize data analytics", "AI business intelligence", "no-code analytics platform"]
@@ -44,6 +44,7 @@ export default function AboutPage() {
           
           <div className="mt-24 mb-24">
             <h2 className="text-3xl font-display tracking-tight mb-8 text-foreground">Why We Built DataVision AI</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-8">Our Mission & Technology</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="space-y-4">
                 <h3 className="text-xl font-medium text-foreground">The Problem</h3>
