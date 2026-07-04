@@ -7,7 +7,7 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = genMeta({
-  title: "Analyze CSV with AI — Free, No Coding",
+  title: "Analyze CSV with AI — Free",
   description: "Upload a CSV, ask a question, get an AI chart in 30 seconds. Free step-by-step guide — no coding needed.",
   path: "/blog/analyze-csv-with-ai",
   keywords: [

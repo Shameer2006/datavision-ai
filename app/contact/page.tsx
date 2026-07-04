@@ -6,8 +6,8 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { Mail, MessageCircle, MapPin, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = genMeta({
-  title: "Contact Us — Sales, Support & Demos",
-  description: "Get a demo, enterprise pricing, or support from the DataVision AI team. We respond within 24 hours.",
+  title: "Contact Us — Get a Demo",
+  description: "Get a demo, enterprise pricing, or technical support from the DataVision AI team. We respond within 24 hours.",
   path: "/contact",
   keywords: ["contact DataVision AI", "AI analytics demo", "enterprise data analytics sales", "data visualization support", "DataVision partnership", "AI platform inquiry"]
 });
@@ -119,6 +119,16 @@ export default function ContactPage() {
             <div>
               <h3 className="text-xl font-medium mb-2 text-foreground">Where is your support team located?</h3>
               <p className="text-muted-foreground leading-relaxed">We have a global support team headquartered in San Francisco, CA, with dedicated representatives in Europe and Asia to provide 24/7 coverage for our Enterprise clients.</p>
+            </div>
+          </div>
+
+          <div className="mt-16 bg-foreground/[0.02] border border-foreground/10 rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl font-display text-foreground mb-6">Contact Information & SLA</h2>
+            <p className="text-muted-foreground mb-6">Our standard support response time is within 24 hours. Enterprise customers receive priority support with a 4-hour SLA during business hours (9 AM - 5 PM EST, Monday - Friday).</p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 text-muted-foreground"><MapPin className="h-5 w-5 text-violet-400" /> 123 Tech Avenue, Suite 400, New York, NY 10001</div>
+              <div className="flex items-center gap-3 text-muted-foreground"><Mail className="h-5 w-5 text-blue-400" /> <a href="mailto:hello@datavision.ai" className="hover:text-foreground transition-colors">hello@datavision.ai</a></div>
+              <div className="flex items-center gap-3 text-muted-foreground"><MessageCircle className="h-5 w-5 text-emerald-400" /> Live chat available inside the application.</div>
             </div>
           </div>
         </div>

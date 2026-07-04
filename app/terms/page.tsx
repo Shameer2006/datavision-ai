@@ -85,7 +85,7 @@ export default function TermsPage() {
               <section>
                 <h2 className="text-2xl font-display text-foreground mb-6">7. Intellectual Property</h2>
                 <p>
-                  All content, trademarks, logos, and software on our platform are the property of DataVision AI. You may not copy, modify, or distribute any part of the platform without our prior written consent. The DataVision AI name and logo are registered trademarks.
+                  All content, trademarks, logos, and software on our platform are the property of DataVision AI. You may not copy, modify, or distribute any part of the platform without our prior written consent. The DataVision AI name and logo are registered trademarks. You agree not to infringe upon our intellectual property rights or the rights of others. We reserve all rights not expressly granted to you in these Terms of Service.
                 </p>
               </section>
 
@@ -110,7 +110,7 @@ export default function TermsPage() {
               <section>
                 <h2 className="text-2xl font-display text-foreground mb-6">10. Limitation of Liability</h2>
                 <p>
-                  DataVision AI shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the platform. Our total liability is limited to the amount you have paid us in the 12 months before the claim.
+                  DataVision AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your access to or use of or inability to access or use the platform; (b) any conduct or content of any third party on the platform. Our total liability is limited to the amount you have paid us in the 12 months before the claim.
                 </p>
               </section>
 

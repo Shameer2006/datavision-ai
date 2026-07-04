@@ -7,7 +7,7 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/seo/config";
 
 export const metadata: Metadata = genMeta({
-  title: "Blog — Analytics Tips & Guides",
+  title: "Blog — Analytics Guides",
   description: "Guides, tutorials, and tips on AI-powered data analytics, CSV visualization, and no-code data analysis.",
   path: "/blog",
   keywords: ["data analytics blog", "CSV analysis tutorial", "data visualization guide", "AI analytics tips", "how to analyze data"],

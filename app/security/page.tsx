@@ -61,7 +61,7 @@ export default function SecurityPage() {
             Security isn&apos;t a feature—it&apos;s the foundation of everything we build. We implement multiple layers of protection to ensure your insights remain yours alone.
           </div>
 
-          <h2 className="sr-only">How We Protect Your Data</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-8">How We Protect Your Data</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/10 border border-foreground/10">
             {securityFeatures.map((feature, i) => (
               <div key={i} className="bg-background p-10 lg:p-12">

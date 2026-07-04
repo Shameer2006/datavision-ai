@@ -40,9 +40,32 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/chat", request.url));
   }
 
+  // Apply Security Headers
+  supabaseResponse.headers.set("X-Content-Type-Options", "nosniff");
+  supabaseResponse.headers.set("X-Frame-Options", "SAMEORIGIN");
+  supabaseResponse.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  supabaseResponse.headers.set(
+    "Content-Security-Policy",
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.plot.ly",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https:",
+      "connect-src 'self' https:",
+      "frame-ancestors 'self'",
+    ].join("; ")
+  );
+  supabaseResponse.headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=()"
+  );
+
   return supabaseResponse;
 }
 
 export const config = {
-  matcher: ["/chat/:path*", "/account/:path*", "/login"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|icon.png).*)",
+  ],
 };

@@ -64,6 +64,20 @@ export default function PrivacyPage() {
                   We use industry-standard encryption and security protocols to protect your information. Your connection strings and metadata are encrypted both at rest and in transit.
                 </p>
               </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">Cookie Details</h2>
+                <p>
+                  We use cookies and similar tracking technologies to track activity on our platform and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our platform.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-2xl font-display text-foreground mb-6">Third-Party Disclosures</h2>
+                <p>
+                  We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties. This does not include trusted third parties who assist us in operating our website, conducting our business, or servicing you, so long as those parties agree to keep this information confidential. We may also release your information when we believe release is appropriate to comply with the law, enforce our site policies, or protect ours or others&apos; rights, property, or safety.
+                </p>
+              </section>
             </div>
           </div>
         </div>
