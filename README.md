@@ -1,41 +1,65 @@
 # DataVision AI
 
-DataVision AI is an intelligent data analytics platform that leverages artificial intelligence to analyze data through a natural language chat interface. 
+DataVision AI is an intelligent data analytics platform that leverages artificial intelligence to analyze data through a natural language chat interface. It empowers users to extract insights from complex datasets by simply asking questions in plain English.
 
-This project is built using [Next.js](https://nextjs.org) and bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Features
+
+- **Natural Language Querying**: Interact with your data using everyday language.
+- **AI-Powered Analytics**: Advanced AI models understand and process your data to deliver accurate insights.
+- **Modern Web Interface**: Built with a responsive, fast, and user-friendly interface using Next.js.
+- **Seamless Database Integration**: Integrated with Supabase for robust data management.
+
+## Tech Stack
+
+- **Frontend**: [Next.js](https://nextjs.org/) (App Router), React, TypeScript
+- **Backend/Database**: Node.js, Supabase
+- **Styling**: Tailwind CSS
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- npm, yarn, pnpm, or bun
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository** (if you haven't already):
+   ```bash
+   git clone <your-repo-url>
+   cd datavision-ai
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Set up environment variables**:
+   Copy the example environment file and fill in the necessary values.
+   ```bash
+   cp .env.example .env.local
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. **Open the application**:
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `/app`: Next.js App Router containing pages and layouts.
+- `/backend`: Backend logic and services.
+- `/components`: Reusable UI components.
+- `/lib`: Utility functions and library wrappers.
+- `/types`: TypeScript type definitions.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Deploy on Vercel
+## License
 
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
